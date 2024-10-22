@@ -13,7 +13,7 @@ export default class extends BaseSchema {
         .notNullable()
       table.integer("capacity").notNullable()
       table.integer("price").notNullable()
-      table.integer("rating").nullable()
+      table.decimal("rating", 2).nullable()
 
       table.timestamp("created_at")
       table.timestamp("updated_at")

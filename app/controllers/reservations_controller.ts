@@ -24,7 +24,6 @@ export default class ReservationsController {
       "userId",
       "checkIn",
       "checkOut",
-      "totalPrice",
     ])
     const reservation = await Reservation.create(data)
     return response.status(201).json(reservation)

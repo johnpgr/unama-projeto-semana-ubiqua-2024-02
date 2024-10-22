@@ -9,7 +9,6 @@ export default class extends BaseSchema {
 
       table.datetime("check_in").notNullable()
       table.datetime("check_out").notNullable()
-      table.integer("total_price").notNullable()
       table.integer("total_guests").notNullable()
       table.enum("status", ["pending", "approved", "rejected"]).notNullable()
       table

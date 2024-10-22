@@ -3,6 +3,9 @@ node_modules
 build
 tmp
 
+# SQLite files
+**/*.sqlite
+
 # Secrets
 .env
 .env.local

@@ -1,26 +1,20 @@
 import { DateTime } from "luxon"
 import { BaseModel, belongsTo, column } from "@adonisjs/lucid/orm"
-import Accommodation from "./accommodation.js"
 import type { BelongsTo } from "@adonisjs/lucid/types/relations"
-import User from "./user.js"
+import Accommodation from "./accommodation.js"
 
-export type ReservationStatus = "pending" | "approved" | "rejected"
-
-export default class Reservation extends BaseModel {
+export default class Address extends BaseModel {
   @column({ isPrimary: true })
   declare id: number
 
-  @column.dateTime()
-  declare checkIn: DateTime
-
-  @column.dateTime()
-  declare checkOut: DateTime
+  @column()
+  declare street: string
 
   @column()
-  declare totalGuests: number
+  declare city: string
 
   @column()
-  declare status: ReservationStatus
+  declare postalCode: string
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
@@ -33,10 +27,4 @@ export default class Reservation extends BaseModel {
 
   @belongsTo(() => Accommodation)
   declare accommodation: BelongsTo<typeof Accommodation>
-
-  @column()
-  declare userId: number
-
-  @belongsTo(() => User)
-  declare user: BelongsTo<typeof User>
 }

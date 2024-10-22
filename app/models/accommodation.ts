@@ -1,7 +1,8 @@
 import { DateTime } from "luxon"
-import { BaseModel, column, hasMany } from "@adonisjs/lucid/orm"
+import { BaseModel, column, hasMany, hasOne } from "@adonisjs/lucid/orm"
 import Reservation from "./reservation.js"
-import type { HasMany } from "@adonisjs/lucid/types/relations"
+import type { HasMany, HasOne } from "@adonisjs/lucid/types/relations"
+import Address from "./address.js"
 
 export type AccommodationType =
   | "hotel"
@@ -37,4 +38,7 @@ export default class Accommodation extends BaseModel {
 
   @hasMany(() => Reservation)
   declare reservations: HasMany<typeof Reservation>
+
+  @hasOne(()=> Address)
+  declare address: HasOne<typeof Address>
 }
