@@ -25,7 +25,8 @@ import {
 import { Link } from '@inertiajs/react'
 
 export default function HostingManagementSystem() {
-  const [date, setDate] = useState<Date | undefined>(new Date())
+  const [checkInDate, setCheckInDate] = useState(new Date())
+  const [checkOutDate, setCheckOutDate] = useState(new Date())
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -200,8 +201,8 @@ export default function HostingManagementSystem() {
                           <Label>Data de Check-in</Label>
                           <Calendar
                             mode="single"
-                            selected={date}
-                            onSelect={setDate}
+                            selected={checkInDate}
+                            onSelect={setCheckInDate}
                             className="rounded-md border w-fit"
                           />
                         </div>
@@ -209,8 +210,8 @@ export default function HostingManagementSystem() {
                           <Label>Data de Check-out</Label>
                           <Calendar
                             mode="single"
-                            selected={date}
-                            onSelect={setDate}
+                            selected={checkOutDate}
+                            onSelect={setCheckOutDate}
                             className="rounded-md border w-fit"
                           />
                         </div>
