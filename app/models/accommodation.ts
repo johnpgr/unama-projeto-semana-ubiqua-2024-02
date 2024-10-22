@@ -1,34 +1,39 @@
 import { DateTime } from "luxon"
-import hash from "@adonisjs/core/services/hash"
-import { compose } from "@adonisjs/core/helpers"
 import { BaseModel, column, hasMany } from "@adonisjs/lucid/orm"
-import { withAuthFinder } from "@adonisjs/auth/mixins/lucid"
 import Reservation from "./reservation.js"
 import type { HasMany } from "@adonisjs/lucid/types/relations"
 
-const AuthFinder = withAuthFinder(() => hash.use("scrypt"), {
-  uids: ["email"],
-  passwordColumnName: "password",
-})
+export type AccommodationType =
+  | "hotel"
+  | "hostel"
+  | "resort"
+  | "ship"
+  | "adapted"
 
-export default class User extends compose(BaseModel, AuthFinder) {
+export default class Accommodation extends BaseModel {
   @column({ isPrimary: true })
   declare id: number
 
   @column()
-  declare fullName: string | null
+  declare name: string
 
   @column()
-  declare email: string
+  declare type: AccommodationType
 
-  @column({ serializeAs: null })
-  declare password: string
+  @column()
+  declare capacity: number
+
+  @column()
+  declare price: number
+
+  @column()
+  declare rating: number | null
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
-  declare updatedAt: DateTime | null
+  declare updatedAt: DateTime
 
   @hasMany(() => Reservation)
   declare reservations: HasMany<typeof Reservation>

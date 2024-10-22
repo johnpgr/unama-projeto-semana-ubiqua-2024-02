@@ -138,5 +138,9 @@
       "strtok3": "8.0.1"
     }
   },
-  "prettier": "@adonisjs/prettier-config"
+  "prettier": {
+    "semi": false,
+    "singleQuote": false,
+    "printWidth": 80
+  }
 }

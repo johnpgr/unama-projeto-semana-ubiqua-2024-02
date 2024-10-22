@@ -1,17 +1,23 @@
-import { useState } from 'react'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { useState } from "react"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select'
-import { Calendar } from '@/components/ui/calendar'
+} from "@/components/ui/select"
+import { Calendar } from "@/components/ui/calendar"
 import {
   Building2,
   Ship,
@@ -21,8 +27,8 @@ import {
   CalendarDays,
   ClipboardList,
   DollarSign,
-} from 'lucide-react'
-import { Link } from '@inertiajs/react'
+} from "lucide-react"
+import { Link } from "@inertiajs/react"
 
 export default function HostingManagementSystem() {
   const [checkInDate, setCheckInDate] = useState(new Date())
@@ -33,19 +39,33 @@ export default function HostingManagementSystem() {
       <header className="px-4 lg:px-6 h-14 flex items-center">
         <Link className="flex items-center justify-center" href="#">
           <Home className="h-6 w-6" />
-          <span className="sr-only">Sistema de Gerenciamento de Hospedagem</span>
+          <span className="sr-only">
+            Sistema de Gerenciamento de Hospedagem
+          </span>
         </Link>
         <nav className="ml-auto flex gap-4 sm:gap-6">
-          <Link className="text-sm font-medium hover:underline underline-offset-4" href="#">
+          <Link
+            className="text-sm font-medium hover:underline underline-offset-4"
+            href="#"
+          >
             Painel
           </Link>
-          <Link className="text-sm font-medium hover:underline underline-offset-4" href="#">
+          <Link
+            className="text-sm font-medium hover:underline underline-offset-4"
+            href="#"
+          >
             Gerenciar Hospedagens
           </Link>
-          <Link className="text-sm font-medium hover:underline underline-offset-4" href="#">
+          <Link
+            className="text-sm font-medium hover:underline underline-offset-4"
+            href="#"
+          >
             Reservas
           </Link>
-          <Link className="text-sm font-medium hover:underline underline-offset-4" href="#">
+          <Link
+            className="text-sm font-medium hover:underline underline-offset-4"
+            href="#"
+          >
             Relatórios
           </Link>
         </nav>
@@ -53,10 +73,15 @@ export default function HostingManagementSystem() {
       <main>
         <section className="w-full flex items-center justify-center py-12 md:py-24 lg:py-32">
           <div className="container px-4 md:px-6">
-            <Tabs defaultValue="painel" className="max-w-screen-sm mx-auto w-full">
+            <Tabs
+              defaultValue="painel"
+              className="max-w-screen-sm mx-auto w-full"
+            >
               <TabsList>
                 <TabsTrigger value="painel">Painel</TabsTrigger>
-                <TabsTrigger value="gerenciar-hospedagens">Gerenciar Hospedagens</TabsTrigger>
+                <TabsTrigger value="gerenciar-hospedagens">
+                  Gerenciar Hospedagens
+                </TabsTrigger>
                 <TabsTrigger value="reservas">Reservas</TabsTrigger>
               </TabsList>
               <TabsContent value="painel">
@@ -82,7 +107,9 @@ export default function HostingManagementSystem() {
                       </Card>
                       <Card>
                         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                          <CardTitle className="text-sm font-medium">Reservas Ativas</CardTitle>
+                          <CardTitle className="text-sm font-medium">
+                            Reservas Ativas
+                          </CardTitle>
                           <CalendarDays className="h-4 w-4 text-muted-foreground" />
                         </CardHeader>
                         <CardContent>
@@ -91,7 +118,9 @@ export default function HostingManagementSystem() {
                       </Card>
                       <Card>
                         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                          <CardTitle className="text-sm font-medium">Quartos Disponíveis</CardTitle>
+                          <CardTitle className="text-sm font-medium">
+                            Quartos Disponíveis
+                          </CardTitle>
                           <ClipboardList className="h-4 w-4 text-muted-foreground" />
                         </CardHeader>
                         <CardContent>
@@ -100,7 +129,9 @@ export default function HostingManagementSystem() {
                       </Card>
                       <Card>
                         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                          <CardTitle className="text-sm font-medium">Receita Total</CardTitle>
+                          <CardTitle className="text-sm font-medium">
+                            Receita Total
+                          </CardTitle>
                           <DollarSign className="h-4 w-4 text-muted-foreground" />
                         </CardHeader>
                         <CardContent>
@@ -122,7 +153,9 @@ export default function HostingManagementSystem() {
                   <CardContent>
                     <form className="space-y-4">
                       <div className="space-y-2">
-                        <Label htmlFor="tipo-hospedagem">Tipo de Hospedagem</Label>
+                        <Label htmlFor="tipo-hospedagem">
+                          Tipo de Hospedagem
+                        </Label>
                         <Select>
                           <SelectTrigger id="tipo-hospedagem">
                             <SelectValue placeholder="Selecione o tipo de hospedagem" />
@@ -156,12 +189,21 @@ export default function HostingManagementSystem() {
                         </Select>
                       </div>
                       <div className="space-y-2">
-                        <Label htmlFor="nome-hospedagem">Nome da Hospedagem</Label>
-                        <Input id="nome-hospedagem" placeholder="Digite o nome da hospedagem" />
+                        <Label htmlFor="nome-hospedagem">
+                          Nome da Hospedagem
+                        </Label>
+                        <Input
+                          id="nome-hospedagem"
+                          placeholder="Digite o nome da hospedagem"
+                        />
                       </div>
                       <div className="space-y-2">
                         <Label htmlFor="capacidade">Capacidade</Label>
-                        <Input id="capacidade" placeholder="Digite a capacidade" type="number" />
+                        <Input
+                          id="capacidade"
+                          placeholder="Digite a capacidade"
+                          type="number"
+                        />
                       </div>
                       <div className="space-y-2">
                         <Label htmlFor="endereco">Endereço</Label>
@@ -176,23 +218,33 @@ export default function HostingManagementSystem() {
                 <Card>
                   <CardHeader>
                     <CardTitle>Reservas</CardTitle>
-                    <CardDescription>Check-in em hospedagens disponíveis</CardDescription>
+                    <CardDescription>
+                      Check-in em hospedagens disponíveis
+                    </CardDescription>
                   </CardHeader>
                   <CardContent>
                     <form className="space-y-4">
                       <div className="space-y-2">
-                        <Label htmlFor="hospedagem">Selecione a Hospedagem</Label>
+                        <Label htmlFor="hospedagem">
+                          Selecione a Hospedagem
+                        </Label>
                         <Select>
                           <SelectTrigger id="hospedagem">
                             <SelectValue placeholder="Selecione uma hospedagem" />
                           </SelectTrigger>
                           <SelectContent position="popper">
-                            <SelectItem value="grand-hotel">Grand Hotel</SelectItem>
-                            <SelectItem value="cruise-ship">Navio de Cruzeiro</SelectItem>
+                            <SelectItem value="grand-hotel">
+                              Grand Hotel
+                            </SelectItem>
+                            <SelectItem value="cruise-ship">
+                              Navio de Cruzeiro
+                            </SelectItem>
                             <SelectItem value="university-dorm">
                               Dormitório Universitário
                             </SelectItem>
-                            <SelectItem value="community-hall">Salão Comunitário</SelectItem>
+                            <SelectItem value="community-hall">
+                              Salão Comunitário
+                            </SelectItem>
                           </SelectContent>
                         </Select>
                       </div>

@@ -1,18 +1,18 @@
-import { defineConfig } from '@adonisjs/lucid'
-import path from 'node:path'
+import { defineConfig } from "@adonisjs/lucid"
+import path from "node:path"
 
 const dbConfig = defineConfig({
-  connection: 'sqlite',
+  connection: "sqlite",
   connections: {
     sqlite: {
-      client: 'better-sqlite3',
+      client: "better-sqlite3",
       connection: {
-        filename: path.resolve('./database/db.sqlite'),
+        filename: path.resolve("./database/db.sqlite"),
       },
       useNullAsDefault: true,
       migrations: {
         naturalSort: true,
-        paths: ['database/migrations'],
+        paths: ["database/migrations"],
       },
     },
   },
