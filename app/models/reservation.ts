@@ -1,14 +1,26 @@
 import { DateTime } from "luxon"
-import { BaseModel, belongsTo, column } from "@adonisjs/lucid/orm"
+import { BaseModel, beforeCreate, belongsTo, column } from "@adonisjs/lucid/orm"
 import Accommodation from "./accommodation.js"
 import type { BelongsTo } from "@adonisjs/lucid/types/relations"
 import User from "./user.js"
+import { ulid } from "ulid"
 
-export type ReservationStatus = "pending" | "approved" | "rejected"
+export const ReservationStatus = {
+  Pending: "Pending",
+  Approved: "Approved",
+  Rejected: "Rejected",
+} as const
+export type ReservationStatus =
+  (typeof ReservationStatus)[keyof typeof ReservationStatus]
 
 export default class Reservation extends BaseModel {
+  @beforeCreate()
+  static assignId(reservation: Reservation) {
+    reservation.id = ulid()
+  }
+
   @column({ isPrimary: true })
-  declare id: number
+  declare id: string
 
   @column.dateTime()
   declare checkIn: DateTime
@@ -29,13 +41,13 @@ export default class Reservation extends BaseModel {
   declare updatedAt: DateTime
 
   @column()
-  declare accommodationId: number
+  declare accommodationId: string
 
   @belongsTo(() => Accommodation)
   declare accommodation: BelongsTo<typeof Accommodation>
 
   @column()
-  declare userId: number
+  declare userId: string
 
   @belongsTo(() => User)
   declare user: BelongsTo<typeof User>

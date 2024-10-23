@@ -1,3 +1,4 @@
+import { ReservationStatus } from "#models/reservation"
 import { BaseSchema } from "@adonisjs/lucid/schema"
 
 export default class extends BaseSchema {
@@ -5,21 +6,19 @@ export default class extends BaseSchema {
 
   async up() {
     this.schema.createTable(this.tableName, (table) => {
-      table.increments("id")
+      table.string("id").primary().notNullable()
 
       table.datetime("check_in").notNullable()
       table.datetime("check_out").notNullable()
       table.integer("total_guests").notNullable()
-      table.enum("status", ["pending", "approved", "rejected"]).notNullable()
+      table.enum("status", Object.keys(ReservationStatus)).notNullable()
       table
-        .integer("accommodation_id")
-        .unsigned()
+        .string("accommodation_id")
         .references("id")
         .inTable("accommodations")
         .onDelete("CASCADE")
       table
-        .integer("user_id")
-        .unsigned()
+        .string("user_id")
         .references("id")
         .inTable("users")
         .onDelete("CASCADE")

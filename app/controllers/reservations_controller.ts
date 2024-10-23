@@ -5,9 +5,9 @@ export default class ReservationsController {
   /**
    * Display a list of resource
    */
-  async index({ response }: HttpContext) {
+  async index({ inertia }: HttpContext) {
     const reservations = await Reservation.all()
-    return response.json(reservations)
+    return inertia.render("reservations", { reservations })
   }
 
   /**

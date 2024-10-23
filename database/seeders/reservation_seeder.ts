@@ -1,5 +1,5 @@
 import Accommodation from "#models/accommodation"
-import Reservation, { type ReservationStatus } from "#models/reservation"
+import Reservation, { ReservationStatus } from "#models/reservation"
 import User from "#models/user"
 import { BaseSeeder } from "@adonisjs/lucid/seeders"
 import { faker } from "@faker-js/faker"
@@ -12,11 +12,7 @@ export default class extends BaseSeeder {
 
     const reservations = Array.from({ length: 20 }, () => {
       const accommodation = faker.helpers.arrayElement(accommodations)
-      const status = faker.helpers.arrayElement<ReservationStatus>([
-        "pending",
-        "approved",
-        "rejected",
-      ])
+      const status = faker.helpers.objectValue(ReservationStatus)
       const checkIn = faker.date.future()
       const checkOut = faker.date.between({
         from: checkIn,
