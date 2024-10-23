@@ -1,19 +1,35 @@
 import { DateTime } from "luxon"
-import { BaseModel, column, hasMany, hasOne } from "@adonisjs/lucid/orm"
+import {
+  BaseModel,
+  beforeCreate,
+  column,
+  hasMany,
+  hasOne,
+} from "@adonisjs/lucid/orm"
 import Reservation from "./reservation.js"
 import type { HasMany, HasOne } from "@adonisjs/lucid/types/relations"
 import Address from "./address.js"
+import { ulid } from "ulid"
+
+export const AccommodationType = {
+  Hotel: "Hotel",
+  Hostel: "Hostel",
+  Resort: "Resort",
+  Ship: "Ship",
+  Adapted: "Adapted",
+} as const
 
 export type AccommodationType =
-  | "hotel"
-  | "hostel"
-  | "resort"
-  | "ship"
-  | "adapted"
+  (typeof AccommodationType)[keyof typeof AccommodationType]
 
 export default class Accommodation extends BaseModel {
+  @beforeCreate()
+  static assignId(accommodation: Accommodation) {
+    accommodation.id = ulid()
+  }
+
   @column({ isPrimary: true })
-  declare id: number
+  declare id: string
 
   @column()
   declare name: string
@@ -28,7 +44,7 @@ export default class Accommodation extends BaseModel {
   declare price: number
 
   @column()
-  declare rating: number | null
+  declare rating: number
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
@@ -39,6 +55,6 @@ export default class Accommodation extends BaseModel {
   @hasMany(() => Reservation)
   declare reservations: HasMany<typeof Reservation>
 
-  @hasOne(()=> Address)
+  @hasOne(() => Address)
   declare address: HasOne<typeof Address>
 }

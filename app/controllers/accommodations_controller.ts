@@ -5,15 +5,15 @@ export default class AccommodationsController {
   /**
    * Display a list of resource
    */
-  async index({ response }: HttpContext) {
-    const accommodations = await Accommodation.all()
-    return response.json(accommodations)
+  async index({ inertia }: HttpContext) {
+    const accommodations = await Accommodation.query().preload("address")
+    return inertia.render("accommodations", { accommodations })
   }
 
   /**
    * Display form to create a new record
    */
-  async create({}: HttpContext) {}
+  async create({ inertia }: HttpContext) {}
 
   /**
    * Handle form submission for the create action

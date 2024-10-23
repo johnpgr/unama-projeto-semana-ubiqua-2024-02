@@ -1,11 +1,17 @@
 import { DateTime } from "luxon"
-import { BaseModel, belongsTo, column } from "@adonisjs/lucid/orm"
+import { BaseModel, beforeCreate, belongsTo, column } from "@adonisjs/lucid/orm"
 import type { BelongsTo } from "@adonisjs/lucid/types/relations"
 import Accommodation from "./accommodation.js"
+import { ulid } from "ulid"
 
 export default class Address extends BaseModel {
+  @beforeCreate()
+  static assignId(address: Address) {
+    address.id = ulid()
+  }
+
   @column({ isPrimary: true })
-  declare id: number
+  declare id: string
 
   @column()
   declare street: string
@@ -23,7 +29,7 @@ export default class Address extends BaseModel {
   declare updatedAt: DateTime
 
   @column()
-  declare accommodationId: number
+  declare accommodationId: string
 
   @belongsTo(() => Accommodation)
   declare accommodation: BelongsTo<typeof Accommodation>
