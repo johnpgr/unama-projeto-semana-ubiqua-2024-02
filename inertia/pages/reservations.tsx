@@ -34,7 +34,7 @@ export default function Reservations(props: { reservation: Reservation[] }) {
 
   return (
     <>
-      <h1 className="text-2xl font-semibold mb-6">Reservations</h1>
+      <h1 className="text-3xl font-bold mb-6 text-foreground">Reservations</h1>
       <Card>
         <CardHeader>
           <CardTitle>Make a Reservation</CardTitle>

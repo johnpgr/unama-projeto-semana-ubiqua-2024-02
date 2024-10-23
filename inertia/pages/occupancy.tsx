@@ -1,4 +1,4 @@
-import Layout from "../components/layout"
+import Layout from "@/components/layout"
 import {
   Card,
   CardContent,
@@ -14,50 +14,36 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-} from "recharts"
+import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from "recharts"
 
 const data = [
-  { name: "Hotels", occupancy: 75 },
-  { name: "Ships", occupancy: 60 },
-  { name: "Schools", occupancy: 40 },
-  { name: "Community Centers", occupancy: 55 },
-  { name: "Adapted Spaces", occupancy: 30 },
+  { name: "Hotel", total: 80 },
+  { name: "Ship", total: 65 },
+  { name: "School", total: 45 },
+  { name: "Community", total: 70 },
 ]
 
-Occupancy.layout = (page: React.ReactNode) => (
+OccupancyPage.layout = (page: React.ReactNode) => (
   <Layout title="Occupancy Management" children={page} />
 )
-
-export default function Occupancy(props: {data: any}) {
+export default function OccupancyPage() {
   return (
-    <>
-      <h1 className="text-2xl font-semibold mb-6">Occupancy Management</h1>
-      <div className="grid gap-6">
+    <div className="space-y-6">
+      <h1 className="text-3xl font-bold text-foreground">Occupancy Management</h1>
+      <div className="grid gap-6 md:grid-cols-2">
         <Card>
           <CardHeader>
-            <CardTitle>Current Occupancy</CardTitle>
+            <CardTitle>Occupancy Overview</CardTitle>
             <CardDescription>
-              Real-time occupancy rates for all accommodation types
+              Current occupancy rates by accommodation type
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <ResponsiveContainer width="100%" height={300}>
+            <ResponsiveContainer width="100%" height={350}>
               <BarChart data={data}>
-                <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="name" />
                 <YAxis />
-                <Tooltip />
-                <Legend />
-                <Bar dataKey="occupancy" fill="#8884d8" />
+                <Bar dataKey="total" fill="#8884d8" />
               </BarChart>
             </ResponsiveContainer>
           </CardContent>
@@ -66,56 +52,49 @@ export default function Occupancy(props: {data: any}) {
           <CardHeader>
             <CardTitle>Occupancy Details</CardTitle>
             <CardDescription>
-              Detailed breakdown of occupancy by accommodation type
+              Detailed view of occupancy by accommodation
             </CardDescription>
           </CardHeader>
           <CardContent>
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Accommodation Type</TableHead>
-                  <TableHead>Total Capacity</TableHead>
-                  <TableHead>Current Occupancy</TableHead>
-                  <TableHead>Occupancy Rate</TableHead>
+                  <TableHead>Accommodation</TableHead>
+                  <TableHead>Type</TableHead>
+                  <TableHead>Occupancy</TableHead>
+                  <TableHead>Available</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 <TableRow>
-                  <TableCell>Hotels</TableCell>
-                  <TableCell>1000</TableCell>
-                  <TableCell>750</TableCell>
-
-                  <TableCell>75%</TableCell>
+                  <TableCell>Grand Hotel</TableCell>
+                  <TableCell>Hotel</TableCell>
+                  <TableCell>85%</TableCell>
+                  <TableCell>15 rooms</TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell>Ships</TableCell>
-                  <TableCell>2000</TableCell>
-                  <TableCell>1200</TableCell>
+                  <TableCell>Cruise Ship A</TableCell>
+                  <TableCell>Ship</TableCell>
+                  <TableCell>70%</TableCell>
+                  <TableCell>600 cabins</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>University Dorms</TableCell>
+                  <TableCell>School</TableCell>
+                  <TableCell>50%</TableCell>
+                  <TableCell>500 beds</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>Community Hall</TableCell>
+                  <TableCell>Community Center</TableCell>
                   <TableCell>60%</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell>Schools</TableCell>
-                  <TableCell>500</TableCell>
-                  <TableCell>200</TableCell>
-                  <TableCell>40%</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell>Community Centers</TableCell>
-                  <TableCell>300</TableCell>
-                  <TableCell>165</TableCell>
-                  <TableCell>55%</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell>Adapted Spaces</TableCell>
-                  <TableCell>200</TableCell>
-                  <TableCell>60</TableCell>
-                  <TableCell>30%</TableCell>
+                  <TableCell>80 spaces</TableCell>
                 </TableRow>
               </TableBody>
             </Table>
           </CardContent>
         </Card>
       </div>
-    </>
+    </div>
   )
 }

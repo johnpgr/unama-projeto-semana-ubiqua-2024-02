@@ -149,7 +149,7 @@ export default function AccommodationsPage({
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-bold">Accommodations</h1>
+        <h1 className="text-3xl font-bold text-foreground">Accommodations</h1>
         {isMobile ? (
           <Drawer>
             <DrawerTrigger asChild>

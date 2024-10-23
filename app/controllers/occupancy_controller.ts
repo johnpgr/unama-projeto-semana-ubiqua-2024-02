@@ -1,13 +1,11 @@
-import Accommodation from "#models/accommodation"
 import type { HttpContext } from "@adonisjs/core/http"
 
-export default class AccommodationsController {
+export default class OccupancyController {
   /**
    * Display a list of resource
    */
   async index({ inertia }: HttpContext) {
-    const accommodations = await Accommodation.query().preload("address")
-    return inertia.render("accommodations", { accommodations })
+    return inertia.render("occupancy")
   }
 
   /**
@@ -18,11 +16,7 @@ export default class AccommodationsController {
   /**
    * Handle form submission for the create action
    */
-  async store({ request, response }: HttpContext) {
-    const data = request.only(["name", "type", "capacity", "price"])
-    const accommodation = await Accommodation.create(data)
-    return response.status(201).json(accommodation)
-  }
+  async store({ request }: HttpContext) {}
 
   /**
    * Show individual record

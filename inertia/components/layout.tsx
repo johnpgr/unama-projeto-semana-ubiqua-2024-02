@@ -8,40 +8,40 @@ export default function Layout(props: {
   return (
     <>
       <Head title={props.title} />
-      <div className="flex h-screen bg-gray-100">
-        <aside className="w-64 bg-white shadow-md">
+      <div className="flex h-screen bg-background/90">
+        <aside className="w-64 bg-background shadow-md">
           <nav className="mt-5 px-2">
             <Link
               href="/"
-              className="group flex items-center px-2 py-2 text-base leading-6 font-medium rounded-md text-gray-900 hover:bg-gray-50 hover:text-gray-900"
+              className="group flex items-center px-2 py-2 text-base leading-6 font-medium rounded-md text-foreground hover:bg-gray-50 hover:text-background"
             >
               <Home className="mr-4 h-6 w-6" />
               Dashboard
             </Link>
             <Link
               href="/accommodations"
-              className="mt-1 group flex items-center px-2 py-2 text-base leading-6 font-medium rounded-md text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+              className="mt-1 group flex items-center px-2 py-2 text-base leading-6 font-medium rounded-md text-foreground hover:bg-gray-50 hover:text-background"
             >
               <Building className="mr-4 h-6 w-6" />
               Accommodations
             </Link>
             <Link
               href="/reservations"
-              className="mt-1 group flex items-center px-2 py-2 text-base leading-6 font-medium rounded-md text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+              className="mt-1 group flex items-center px-2 py-2 text-base leading-6 font-medium rounded-md text-foreground hover:bg-gray-50 hover:text-background"
             >
               <Calendar className="mr-4 h-6 w-6" />
               Reservations
             </Link>
             <Link
               href="/occupancy"
-              className="mt-1 group flex items-center px-2 py-2 text-base leading-6 font-medium rounded-md text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+              className="mt-1 group flex items-center px-2 py-2 text-base leading-6 font-medium rounded-md text-foreground hover:bg-gray-50 hover:text-background"
             >
               <Users className="mr-4 h-6 w-6" />
               Occupancy
             </Link>
             <Link
               href="/support"
-              className="mt-1 group flex items-center px-2 py-2 text-base leading-6 font-medium rounded-md text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+              className="mt-1 group flex items-center px-2 py-2 text-base leading-6 font-medium rounded-md text-foreground hover:bg-gray-50 hover:text-background"
             >
               <Map className="mr-4 h-6 w-6" />
               Visitor Support
