@@ -1,44 +1,59 @@
 "use client"
 
 import {
-    Building,
-    Building2, Cuboid, PlusCircle, Ship,
-    Volleyball
+  Building,
+  Building2,
+  Cuboid,
+  PlusCircle,
+  Ship,
+  Volleyball,
 } from "lucide-react"
+import { zodResolver } from "@hookform/resolvers/zod"
 import React from "react"
 import { Input } from "~/components/ui/input"
-import { Label } from "~/components/ui/label"
 import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
 } from "~/components/ui/select"
 import { useMediaQuery } from "~/hooks/use-media-query"
 import {
-    Drawer,
-    DrawerClose,
-    DrawerContent,
-    DrawerDescription,
-    DrawerFooter,
-    DrawerHeader,
-    DrawerTitle,
-    DrawerTrigger,
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
 } from "~/components/ui/drawer"
 import {
-    Sheet,
-    SheetContent,
-    SheetDescription,
-    SheetHeader,
-    SheetTitle,
-    SheetTrigger,
-    SheetFooter,
-    SheetClose,
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+  SheetFooter,
+  SheetClose,
 } from "~/components/ui/sheet"
 import { Button } from "~/components/ui/button"
 import { AccommodationType } from "~/database/schema"
 import { createAccommodationAction } from "~/features/accommodations/accommodation.actions"
+import { useForm } from "react-hook-form"
+import { z } from "zod"
+import { createAccommodationActionSchema } from "~/features/accommodations/accommodation.validation"
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "~/components/ui/form"
+import { useRouter } from "next/navigation"
 
 const iconClasses = "mr-2 h-4 w-4"
 const accommodationTypeIcons: Record<string, React.ReactNode> = {
@@ -49,165 +64,238 @@ const accommodationTypeIcons: Record<string, React.ReactNode> = {
   [AccommodationType.Adapted]: <Cuboid className={iconClasses} />,
 }
 
-export function NewAccommodationForm(props: {action: typeof createAccommodationAction}) {
-  const isMobile = useMediaQuery("(max-width: 640px)")
-  const [formData, setFormData] = React.useState({
-    name: "",
-    type: "",
-    capacity: "",
-    street: "",
-    city: "",
-    postalCode: "",
+const accommodationTypesPTBR: Record<string, string> = {
+  [AccommodationType.Hotel]: "Hotel",
+  [AccommodationType.Ship]: "Navio",
+  [AccommodationType.Hostel]: "Hostel",
+  [AccommodationType.Resort]: "Resort",
+  [AccommodationType.Adapted]: "Adaptado",
+}
+
+const FormContent = (props: {
+  action: typeof createAccommodationAction
+  toggleOpen: () => void
+  children: React.ReactNode
+}) => {
+  const router = useRouter()
+  const form = useForm<z.infer<typeof createAccommodationActionSchema>>({
+    resolver: zodResolver(createAccommodationActionSchema),
+    criteriaMode: "all",
   })
-  const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault()
-    // Add logic to handle form submission
-    console.log("Form submitted:", formData)
-    // Reset form after submission
-    setFormData({ name: "", type: "", capacity: "", street: "", city: "", postalCode: "" })
+
+  async function onSubmit(
+    data: z.infer<typeof createAccommodationActionSchema>
+  ) {
+    await props
+      .action(data)
+      .then(() => {
+        router.refresh()
+        props.toggleOpen()
+      })
+      .catch((e) => {
+        console.error(e)
+      })
   }
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target
-    setFormData((prevData) => ({ ...prevData, [name]: value }))
-  }
-
-  const handleSelectChange = (value: string) => {
-    setFormData((prevData) => ({ ...prevData, type: value }))
-  }
-  const FormContent = () => (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <div className="space-y-2">
-        <Label htmlFor="name">Accommodation Name</Label>
-        <Input
-          id="name"
-          name="name"
-          placeholder="Enter accommodation name"
-          value={formData.name}
-          onChange={handleInputChange}
-          required
+  return (
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+        <FormField
+          control={form.control}
+          name="accommodation.name"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Nome da Acomodação</FormLabel>
+              <FormControl>
+                <Input placeholder="Digite o nome da acomodação" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
         />
-      </div>
-      <div className="space-y-2">
-        <Label htmlFor="type">Type</Label>
-        <Select onValueChange={handleSelectChange} required>
-          <SelectTrigger id="type">
-            <SelectValue placeholder="Select accommodation type" />
-          </SelectTrigger>
-          <SelectContent>
-            {Object.keys(accommodationTypeIcons).map((type) => (
-              <SelectItem key={type} value={type}>
-                <span className="flex items-center">
-                  {accommodationTypeIcons[type]}
-                  {type}
-                </span>
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
-      <div className="space-y-2">
-        <Label htmlFor="capacity">Capacity</Label>
-        <Input
-          id="capacity"
-          name="capacity"
-          type="number"
-          placeholder="Enter total capacity"
-          value={formData.capacity}
-          onChange={handleInputChange}
-          required
+        <FormField
+          control={form.control}
+          name="accommodation.type"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Tipo de acomodação</FormLabel>
+              <FormControl>
+                <Select
+                  required
+                  value={field.value}
+                  name={field.name}
+                  onValueChange={(v) => {
+                    field.onChange(v)
+                  }}
+                >
+                  <SelectTrigger id={field.name}>
+                    <SelectValue placeholder="Selecione o tipo de acomodação" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {Object.keys(accommodationTypeIcons).map((type) => (
+                      <SelectItem key={type} value={type}>
+                        <span className="flex items-center">
+                          {accommodationTypeIcons[type]}
+                          {accommodationTypesPTBR[type]}
+                        </span>
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
         />
-      </div>
-      <p className="font-bold pt-4">Address</p>
-      <div className="space-y-2">
-        <Label htmlFor="street">Street</Label>
-        <Input
-          id="street"
-          placeholder="Enter street address"
-          value={formData.street}
-          onChange={handleInputChange}
-          required
+        <FormField
+          control={form.control}
+          name="accommodation.capacity"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Capacidade</FormLabel>
+              <FormControl>
+                <Input
+                  type="number"
+                  required
+                  placeholder="Digite a capacidade total"
+                  {...field}
+                  onChange={(e) => field.onChange(+e.target.value)}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
         />
-      </div>
-      <div className="space-y-2">
-        <Label htmlFor="city">City</Label>
-        <Input
-          id="city"
-          placeholder="Enter city"
-          value={formData.city}
-          onChange={handleInputChange}
-          required
+        {/* Price of the accommodation */}
+        <FormField
+          control={form.control}
+          name="accommodation.price"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Preço</FormLabel>
+              <FormControl>
+                <Input
+                  type="number"
+                  required
+                  placeholder="Digite o preço da acomodação"
+                  {...field}
+                  onChange={(e) => field.onChange(+e.target.value)}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
         />
-      </div>
-      <div className="space-y-2">
-        <Label htmlFor="postalCode">Postal Code</Label>
-        <Input
-          id="postalCode"
-          placeholder="Enter Postal Code"
-          value={formData.postalCode}
-          onChange={handleInputChange}
-          required
+        <p className="font-bold pt-4">Endereço</p>
+        <FormField
+          control={form.control}
+          name="address.street"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Rua</FormLabel>
+              <FormControl>
+                <Input placeholder="Digite o endereço da rua" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
         />
-      </div>
-    </form>
+        <FormField
+          control={form.control}
+          name="address.city"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Cidade</FormLabel>
+              <FormControl>
+                <Input placeholder="Digite a cidade" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="address.postalCode"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>CEP</FormLabel>
+              <FormControl>
+                <Input placeholder="Digite o CEP" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        {props.children}
+      </form>
+    </Form>
   )
+}
+
+export function NewAccommodationForm(props: {
+  action: typeof createAccommodationAction
+}) {
+  const isMobile = useMediaQuery("(max-width: 640px)")
+  const [isOpen, setIsOpen] = React.useState(false)
+
+  function toggleOpen() {
+    setIsOpen((prev) => !prev)
+  }
 
   return (
     <>
       {isMobile ? (
-        <Drawer>
+        <Drawer open={isOpen} onOpenChange={toggleOpen}>
           <DrawerTrigger asChild>
             <Button>
               <PlusCircle className="mr-2 h-4 w-4" />
-              Add Accommodation
+              Nova Acomodação
             </Button>
           </DrawerTrigger>
           <DrawerContent className="px-4">
             <DrawerHeader>
-              <DrawerTitle>Add New Accommodation</DrawerTitle>
+              <DrawerTitle>Criar Nova Acomodação</DrawerTitle>
               <DrawerDescription>
-                Enter the details of the new accommodation
+                Insira os detalhes da nova acomodação
               </DrawerDescription>
             </DrawerHeader>
-            <FormContent />
-            <DrawerFooter className="px-0">
-              <DrawerClose asChild>
-                <Button type="button" variant="outline">
-                  Cancel
-                </Button>
-              </DrawerClose>
-              <Button type="submit" form="add-accommodation-form">
-                Add Accommodation
-              </Button>
-            </DrawerFooter>
+            <FormContent action={props.action} toggleOpen={toggleOpen}>
+              <DrawerFooter className="px-0">
+                <DrawerClose asChild>
+                  <Button type="button" variant="outline">
+                    Cancelar
+                  </Button>
+                </DrawerClose>
+                <Button type="submit">Criar Acomodação</Button>
+              </DrawerFooter>
+            </FormContent>
           </DrawerContent>
         </Drawer>
       ) : (
-        <Sheet>
+        <Sheet open={isOpen} onOpenChange={toggleOpen}>
           <SheetTrigger asChild>
             <Button>
               <PlusCircle className="mr-2 h-4 w-4" />
-              Add Accommodation
+              Criar Acomodação
             </Button>
           </SheetTrigger>
-          <SheetContent side="right" className="space-y-6">
+          <SheetContent side="right" className="overflow-y-auto space-y-6">
             <SheetHeader>
-              <SheetTitle>Add New Accommodation</SheetTitle>
+              <SheetTitle>Criar Nova Acomodação</SheetTitle>
               <SheetDescription>
-                Enter the details of the new accommodation
+                Insira os detalhes da nova acomodação
               </SheetDescription>
             </SheetHeader>
-            <FormContent />
-            <SheetFooter>
-              <SheetClose asChild>
-                <Button type="button" variant="outline">
-                  Cancel
-                </Button>
-              </SheetClose>
-              <Button type="submit" form="add-accommodation-form">
-                Add Accommodation
-              </Button>
-            </SheetFooter>
+            <FormContent action={props.action} toggleOpen={toggleOpen} >
+              <SheetFooter>
+                <SheetClose asChild>
+                  <Button type="button" variant="outline">
+                    Cancelar
+                  </Button>
+                </SheetClose>
+                <Button type="submit">Criar Acomodação</Button>
+              </SheetFooter>
+            </FormContent>
           </SheetContent>
         </Sheet>
       )}

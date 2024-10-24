@@ -12,19 +12,15 @@ import { LogOut, Menu, Settings, Link2, Shield } from "lucide-react"
 import { Button } from "~/components/ui/button"
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar"
 import { UserRole } from "~/database/schema"
-import { signOut } from "~/lib/auth"
+import { signOut, signOutAction } from "~/lib/auth"
 
 export function SignoutButton() {
-  async function signOutAction() {
-    "use server"
-    await signOut()
-  }
   return (
     <form action={signOutAction}>
       <DropdownMenuItem asChild>
         <button type="submit" className="w-full cursor-pointer">
           <LogOut className="mr-2 h-4 w-4" />
-          <span>Log out</span>
+          <span>Sair</span>
         </button>
       </DropdownMenuItem>
     </form>
@@ -36,24 +32,24 @@ export function Header({ session }: { session: Session | null }) {
     <header className="bg-accent shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
         <Link href="/">
-          <h1 className="text-2xl font-bold">LodgeEase</h1>
+          <h1 className="text-2xl font-bold">EasyLodge</h1>
         </Link>
         <nav>
           <ul className="flex space-x-4 items-center">
             <li>
-              <Link href="/accommodations">Find Accommodations</Link>
+              <Link href="/accommodations">Encontre Acomodações</Link>
             </li>
             <li>
-              <Link href="/about">About Us</Link>
+              <Link href="/about">Sobre Nós</Link>
             </li>
             <li>
-              <Link href="/contact">Contact</Link>
+              <Link href="/contact">Contato</Link>
             </li>
             {session?.user ? (
               <LoggedUserButtons user={session.user} />
             ) : (
               <li>
-                <Link href="/login">Login</Link>
+                <Link href="/login">Entrar</Link>
               </li>
             )}
           </ul>
@@ -93,12 +89,12 @@ function LoggedUserButtons({ user }: { user: User & Session["user"] }) {
             <DropdownMenuSeparator />
             <DropdownMenuItem>
               <Settings className="mr-2 h-4 w-4" />
-              <span>Settings</span>
+              <span>Configurações</span>
             </DropdownMenuItem>
             {user.role === UserRole.Admin ? (
               <DropdownMenuItem>
                 <Shield className="mr-2 h-4 w-4" />
-                <Link href="/admin">Admin panel</Link>
+                <Link href="/admin">Painel de Administração</Link>
               </DropdownMenuItem>
             ) : null}
             <SignoutButton />
@@ -109,7 +105,7 @@ function LoggedUserButtons({ user }: { user: User & Session["user"] }) {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
+              <span className="sr-only">Abrir menu</span>
               <Menu className="h-6 w-6" />
             </Button>
           </DropdownMenuTrigger>
@@ -124,7 +120,7 @@ function LoggedUserButtons({ user }: { user: User & Session["user"] }) {
             </DropdownMenuLabel>
             <DropdownMenuItem>
               <Settings className="mr-2 h-4 w-4" />
-              <span>Settings</span>
+              <span>Configurações</span>
             </DropdownMenuItem>
             <SignoutButton />
           </DropdownMenuContent>

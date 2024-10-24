@@ -24,104 +24,104 @@ import { Badge } from "~/components/ui/badge"
 
 const chartData = [
   { name: "Hotel", total: 80 },
-  { name: "Ship", total: 65 },
-  { name: "School", total: 45 },
-  { name: "Community", total: 70 },
+  { name: "Navio", total: 65 },
+  { name: "Escola", total: 45 },
+  { name: "Comunidade", total: 70 },
 ]
 
 const recentReservations = [
   {
     id: 1,
     guest: "Alice Johnson",
-    accommodation: "Luxury Suite",
+    accommodation: "Suíte de Luxo",
     checkIn: "2024-03-15",
     checkOut: "2024-03-20",
-    status: "Confirmed",
+    status: "Confirmada",
   },
   {
     id: 2,
     guest: "Bob Smith",
-    accommodation: "Cozy Cabin",
+    accommodation: "Cabana Aconchegante",
     checkIn: "2024-03-16",
     checkOut: "2024-03-18",
-    status: "Pending",
+    status: "Pendente",
   },
   {
     id: 3,
     guest: "Charlie Brown",
-    accommodation: "Beachfront Villa",
+    accommodation: "Vila à Beira-mar",
     checkIn: "2024-03-17",
     checkOut: "2024-03-22",
-    status: "Confirmed",
+    status: "Confirmada",
   },
   {
     id: 4,
     guest: "Diana Prince",
-    accommodation: "City Apartment",
+    accommodation: "Apartamento na Cidade",
     checkIn: "2024-03-18",
     checkOut: "2024-03-21",
-    status: "Cancelled",
+    status: "Cancelada",
   },
   {
     id: 5,
     guest: "Ethan Hunt",
-    accommodation: "Mountain Chalet",
+    accommodation: "Chalé na Montanha",
     checkIn: "2024-03-19",
     checkOut: "2024-03-23",
-    status: "Confirmed",
+    status: "Confirmada",
   },
 ]
 
 export default function AdminDashboard() {
   return (
     <div className="space-y-6">
-      <h1 className="text-3xl font-bold">Dashboard</h1>
+      <h1 className="text-3xl font-bold">Painel de Controle</h1>
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">
-              Total Accommodations
+              Total de Acomodações
             </CardTitle>
             <BedDouble className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">254</div>
-            <p className="text-xs text-muted-foreground">+12 from last month</p>
+            <p className="text-xs text-muted-foreground">+12 desde o mês passado</p>
           </CardContent>
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">
-              Active Reservations
+              Reservas Ativas
             </CardTitle>
             <CalendarDays className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">145</div>
-            <p className="text-xs text-muted-foreground">+22% from last week</p>
+            <p className="text-xs text-muted-foreground">+22% desde a semana passada</p>
           </CardContent>
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">
-              Current Occupancy
+              Ocupação Atual
             </CardTitle>
             <Users className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">78%</div>
-            <p className="text-xs text-muted-foreground">+5% from yesterday</p>
+            <p className="text-xs text-muted-foreground">+5% desde ontem</p>
           </CardContent>
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Revenue</CardTitle>
+            <CardTitle className="text-sm font-medium">Receita</CardTitle>
             <CreditCard className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">$54,231</div>
+            <div className="text-2xl font-bold">R$54.231</div>
             <p className="text-xs text-muted-foreground">
-              +19% from last month
+              +19% desde o mês passado
             </p>
           </CardContent>
         </Card>
@@ -129,17 +129,17 @@ export default function AdminDashboard() {
       <div className="grid gap-6 md:grid-cols-2">
         <Card>
           <CardHeader>
-            <CardTitle>Recent Reservations</CardTitle>
+            <CardTitle>Reservas Recentes</CardTitle>
             <CardDescription>
-              Latest bookings across all accommodations
+              Últimas reservas em todas as acomodações
             </CardDescription>
           </CardHeader>
           <CardContent>
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead className="w-[100px]">Guest</TableHead>
-                  <TableHead>Accommodation</TableHead>
+                  <TableHead className="w-[100px]">Hóspede</TableHead>
+                  <TableHead>Acomodação</TableHead>
                   <TableHead>Check-in</TableHead>
                   <TableHead>Check-out</TableHead>
                   <TableHead>Status</TableHead>
@@ -171,9 +171,9 @@ export default function AdminDashboard() {
                     <TableCell>
                       <Badge
                         variant={
-                          reservation.status === "Confirmed"
+                          reservation.status === "Confirmada"
                             ? "default"
-                            : reservation.status === "Pending"
+                            : reservation.status === "Pendente"
                               ? "secondary"
                               : "destructive"
                         }
@@ -189,8 +189,8 @@ export default function AdminDashboard() {
         </Card>
         <Card>
           <CardHeader>
-            <CardTitle>Occupancy Trend</CardTitle>
-            <CardDescription>7-day occupancy rate trend</CardDescription>
+            <CardTitle>Tendência de Ocupação</CardTitle>
+            <CardDescription>Tendência da taxa de ocupação de 7 dias</CardDescription>
           </CardHeader>
           <CardContent>
             <OccupancyCharts data={chartData} />
@@ -200,4 +200,3 @@ export default function AdminDashboard() {
     </div>
   )
 }
-

@@ -5,7 +5,8 @@ import { addressInsertSchema } from "../addresses/address.validation"
 
 export const accommodationInsertSchema = createInsertSchema(Accommodation, {
   type: z.nativeEnum(AccommodationType),
-})
+}).omit({ rating: true })
+
 export const accommodationSelectSchema = createSelectSchema(Accommodation, {
   type: z.nativeEnum(AccommodationType),
 })

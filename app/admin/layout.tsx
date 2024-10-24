@@ -1,26 +1,23 @@
 import { Button } from "~/components/ui/button"
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu"
 import {
-  BedDouble,
-  CalendarDays,
-  CreditCard,
-  HelpCircle,
-  LayoutDashboard,
-  LogOut,
-  Menu,
-  Settings,
-  Users,
+    BedDouble,
+    CalendarDays,
+    CreditCard, LayoutDashboard,
+    LogOut,
+    Menu,
+    Settings
 } from "lucide-react"
 import Image from "next/image"
 import Placeholder from "~/assets/placeholder.svg"
-import { Nav,MobileNav } from "./Nav"
+import { Nav, MobileNav } from "./Nav"
 import { auth } from "~/lib/auth"
 import { notFound } from "next/navigation"
 import { UserRole } from "~/database/schema"
@@ -29,37 +26,29 @@ const navItemClasses = "h-5 w-5 mr-2"
 
 const navItems = [
   {
-    name: "Dashboard",
+    name: "Painel de Controle",
     href: "/admin",
     icon: <LayoutDashboard className={navItemClasses} />,
   },
   {
-    name: "Accommodations",
+    name: "Acomodações",
     href: "/admin/accommodations",
     icon: <BedDouble className={navItemClasses} />,
   },
   {
-    name: "Reservations",
+    name: "Reservas",
     href: "/admin/reservations",
     icon: <CalendarDays className={navItemClasses} />,
   },
   {
-    name: "Occupancy",
-    href: "/admin/occupancy",
-    icon: <Users className={navItemClasses} />,
-  },
-  {
-    name: "Payments",
+    name: "Pagamentos",
     href: "/admin/payments",
     icon: <CreditCard className={navItemClasses} />,
   },
-  {
-    name: "Support",
-    href: "/admin/support",
-    icon: <HelpCircle className={navItemClasses} />,
-  },
 ]
 export type NavItem = (typeof navItems)[number]
+
+export const runtime = "edge"
 
 export default async function AdminLayout({
   children,
@@ -86,21 +75,21 @@ export default async function AdminLayout({
                       src={Placeholder.src}
                       width={Placeholder.width}
                       height={Placeholder.height}
-                      alt="User avatar"
+                      alt="Avatar do usuário"
                       className="rounded-full"
                     />
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
-                  <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                  <DropdownMenuLabel>Minha Conta</DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem>
                     <Settings className="mr-2 h-4 w-4" />
-                    <span>Settings</span>
+                    <span>Configurações</span>
                   </DropdownMenuItem>
                   <DropdownMenuItem>
                     <LogOut className="mr-2 h-4 w-4" />
-                    <span>Log out</span>
+                    <span>Sair</span>
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
@@ -117,11 +106,11 @@ export default async function AdminLayout({
                   <DropdownMenuSeparator />
                   <DropdownMenuItem>
                     <Settings className="mr-2 h-4 w-4" />
-                    <span>Settings</span>
+                    <span>Configurações</span>
                   </DropdownMenuItem>
                   <DropdownMenuItem>
                     <LogOut className="mr-2 h-4 w-4" />
-                    <span>Log out</span>
+                    <span>Sair</span>
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>

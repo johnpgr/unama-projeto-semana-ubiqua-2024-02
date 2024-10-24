@@ -17,7 +17,7 @@ export default async function Layout({
   const session = await auth()
 
   return (
-    <html className="dark" lang="en">
+    <html lang="en">
       <body>
         <Header session={session} />
         {children}

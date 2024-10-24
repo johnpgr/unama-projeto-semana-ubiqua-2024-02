@@ -6,6 +6,7 @@ import Github from "next-auth/providers/github"
 import { env } from "~/env.mjs"
 import { Provider } from "next-auth/providers"
 import { cache } from "react"
+import { redirect } from "next/navigation"
 
 const providers: Provider[] = []
 
@@ -21,7 +22,12 @@ if (githubProviderEnabled) {
   )
 }
 
-export const { auth: defaultAuth, handlers, signIn, signOut } = NextAuth({
+export const {
+  auth: defaultAuth,
+  handlers,
+  signIn,
+  signOut,
+} = NextAuth({
   adapter: DrizzleAdapter(db, {
     usersTable: schema.User,
     accountsTable: schema.Account,
@@ -41,3 +47,14 @@ export const { auth: defaultAuth, handlers, signIn, signOut } = NextAuth({
 })
 
 export const auth = cache(defaultAuth)
+
+export async function signInGithubAction() {
+  "use server"
+  console.log("signing in with github")
+  await signIn("github").then(() => redirect("/"))
+}
+
+export async function signOutAction() {
+  "use server"
+  await signOut().then(() => redirect("/"))
+}

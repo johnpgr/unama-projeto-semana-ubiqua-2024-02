@@ -39,22 +39,23 @@ export default function HomePage() {
   const [guestCount, setGuestCount] = useState<number>()
 
   return (
+    
     <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <section className="text-center mb-12">
-        <h2 className="text-4xl font-bold mb-4">Find Your Perfect Stay</h2>
+        <h2 className="text-4xl font-bold mb-4">Encontre a Estadia Perfeita</h2>
         <p className="text-xl text-muted-foreground mb-8">
-          Discover a wide range of accommodations for your next adventure
+          Descubra uma ampla gama de acomodações para sua próxima aventura
         </p>
         <Card className="max-w-5xl mx-auto">
           <CardContent className="pt-6">
             <form className="grid grid-cols-1 md:grid-cols-4 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="location">Location</Label>
+                <Label htmlFor="location">Localização</Label>
                 <div className="relative">
                   <MapPinIcon className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
                   <Input
                     id="location"
-                    placeholder="Where are you going?"
+                    placeholder="Para onde você vai?"
                     className="pl-10"
                   />
                 </div>
@@ -74,7 +75,7 @@ export default function HomePage() {
                       {checkIn ? (
                         format(checkIn, "PPP")
                       ) : (
-                        <span>Pick a date</span>
+                        <span>Escolha uma data</span>
                       )}
                     </Button>
                   </PopoverTrigger>
@@ -103,7 +104,7 @@ export default function HomePage() {
                       {checkOut ? (
                         format(checkOut, "PPP")
                       ) : (
-                        <span>Pick a date</span>
+                        <span>Escolha uma data</span>
                       )}
                     </Button>
                   </PopoverTrigger>
@@ -118,7 +119,7 @@ export default function HomePage() {
                 </Popover>
               </div>
               <div className="space-y-2">
-                <Label htmlFor="guests">Guests</Label>
+                <Label htmlFor="guests">Hóspedes</Label>
                 <div className="relative">
                   <UsersIcon className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
                   <Select
@@ -135,25 +136,25 @@ export default function HomePage() {
                         ),
                       })}
                     >
-                      <SelectValue placeholder="Select" />
+                      <SelectValue placeholder="Selecione" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="1">1 Guest</SelectItem>
-                      <SelectItem value="2">2 Guests</SelectItem>
-                      <SelectItem value="3">3 Guests</SelectItem>
-                      <SelectItem value="4">4+ Guests</SelectItem>
+                      <SelectItem value="1">1 Hóspede</SelectItem>
+                      <SelectItem value="2">2 Hóspedes</SelectItem>
+                      <SelectItem value="3">3 Hóspedes</SelectItem>
+                      <SelectItem value="4">4+ Hóspedes</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
               </div>
-              <Button className="md:col-span-4">Search Accommodations</Button>
+              <Button className="md:col-span-4">Buscar Acomodações</Button>
             </form>
           </CardContent>
         </Card>
       </section>
 
       <section className="mb-12">
-        <h3 className="text-2xl font-bold mb-6">Featured Accommodations</h3>
+        <h3 className="text-2xl font-bold mb-6">Acomodações em Destaque</h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {[1, 2, 3].map((i) => (
             <Card key={i}>
@@ -161,19 +162,19 @@ export default function HomePage() {
                 src={Placeholder.src}
                 width={Placeholder.width}
                 height={Placeholder.height}
-                alt="Accommodation"
+                alt="Acomodação"
                 className="w-full h-48 object-cover"
               />
               <CardHeader>
-                <CardTitle>Luxury Suite {i}</CardTitle>
-                <CardDescription>City Center, New York</CardDescription>
+                <CardTitle>Suíte de Luxo {i}</CardTitle>
+                <CardDescription>Centro da Cidade, Nova York</CardDescription>
               </CardHeader>
               <CardContent>
                 <p className="text-sm text-muted-foreground mb-2">
-                  From $199 per night
+                  A partir de $199 por noite
                 </p>
                 <Button variant="outline" className="w-full">
-                  View Details
+                  Ver Detalhes
                 </Button>
               </CardContent>
             </Card>
@@ -182,43 +183,44 @@ export default function HomePage() {
       </section>
 
       <section>
-        <h3 className="text-2xl font-bold mb-6">Why Choose LodgeEase?</h3>
+        <h3 className="text-2xl font-bold mb-6">Por que Escolher LodgeEase?</h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <Card>
             <CardHeader>
-              <CardTitle>Wide Selection</CardTitle>
+              <CardTitle>Ampla Seleção</CardTitle>
             </CardHeader>
             <CardContent>
               <p>
-                Choose from hotels, vacation rentals, and unique accommodations
-                worldwide.
+                Escolha entre hotéis, aluguéis de temporada e acomodações únicas
+                em todo o mundo.
               </p>
             </CardContent>
           </Card>
           <Card>
             <CardHeader>
-              <CardTitle>Best Price Guarantee</CardTitle>
+              <CardTitle>Garantia do Melhor Preço</CardTitle>
             </CardHeader>
             <CardContent>
               <p>
-                Find a lower price? We&apos;ll match it and give you an additional
-                10% off.
+                Encontrou um preço mais baixo? Nós igualamos e damos um desconto
+                adicional de 10%.
               </p>
             </CardContent>
           </Card>
           <Card>
             <CardHeader>
-              <CardTitle>24/7 Customer Support</CardTitle>
+              <CardTitle>Suporte ao Cliente 24/7</CardTitle>
             </CardHeader>
             <CardContent>
               <p>
-                Our dedicated team is always here to help with any questions or
-                concerns.
+                Nossa equipe dedicada está sempre aqui para ajudar com qualquer
+                dúvida ou preocupação.
               </p>
             </CardContent>
           </Card>
         </div>
       </section>
     </main>
+
   )
 }

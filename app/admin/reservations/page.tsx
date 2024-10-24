@@ -20,7 +20,7 @@ import {
   TableRow,
 } from "~/components/ui/table"
 
-export default function CheckInOut() {
+export default function ReservationsPage() {
   const [checkIns, setCheckIns] = useState([
     { id: 1, name: "John Doe", accommodation: "Grand Hotel", room: "101" },
     { id: 2, name: "Jane Smith", accommodation: "Cruise Ship A", room: "A22" },
@@ -38,56 +38,56 @@ export default function CheckInOut() {
 
   const handleCheckIn = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    // Add logic to handle check-in
   }
 
   const handleCheckOut = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    // Add logic to handle check-out
   }
 
   return (
     <>
-      <h1 className="text-2xl font-semibold mb-6">
-        Check-in / Check-out Control
-      </h1>
       <Tabs defaultValue="check-in">
-        <TabsList>
-          <TabsTrigger value="check-in">Check-in</TabsTrigger>
-          <TabsTrigger value="check-out">Check-out</TabsTrigger>
-        </TabsList>
+        <div className="flex items-center w-full justify-between mb-4">
+          <h1 className="text-2xl font-semibold">Controle de Reservas</h1>
+          <TabsList>
+            <TabsTrigger value="check-in">Check-in</TabsTrigger>
+            <TabsTrigger value="check-out">Check-out</TabsTrigger>
+          </TabsList>
+        </div>
         <TabsContent value="check-in">
           <Card>
             <CardHeader>
               <CardTitle>Check-in</CardTitle>
-              <CardDescription>Process new guest check-ins</CardDescription>
+              <CardDescription>
+                Buscar check-ins de hóspedes
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <form onSubmit={handleCheckIn} className="space-y-4 mb-6">
                 <div className="space-y-2">
-                  <Label htmlFor="guest-name">Guest Name</Label>
+                  <Label htmlFor="guest-name">Nome do Hóspede</Label>
                   <Input
                     id="guest-name"
-                    placeholder="Enter guest name"
+                    placeholder="Digite o nome do hóspede"
                     required
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="reservation-id">Reservation ID</Label>
+                  <Label htmlFor="reservation-id">ID da Reserva</Label>
                   <Input
                     id="reservation-id"
-                    placeholder="Enter reservation ID"
+                    placeholder="Digite o ID da reserva"
                     required
                   />
                 </div>
-                <Button type="submit">Process Check-in</Button>
+                <Button type="submit">Buscar Check-in</Button>
               </form>
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Guest Name</TableHead>
-                    <TableHead>Accommodation</TableHead>
-                    <TableHead>Room</TableHead>
+                    <TableHead>Nome do Hóspede</TableHead>
+                    <TableHead>Acomodação</TableHead>
+                    <TableHead>Quarto</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -107,34 +107,36 @@ export default function CheckInOut() {
           <Card>
             <CardHeader>
               <CardTitle>Check-out</CardTitle>
-              <CardDescription>Process guest check-outs</CardDescription>
+              <CardDescription>
+                Buscar check-outs de hóspedes
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <form onSubmit={handleCheckOut} className="space-y-4 mb-6">
                 <div className="space-y-2">
-                  <Label htmlFor="guest-name-out">Guest Name</Label>
+                  <Label htmlFor="guest-name-out">Nome do Hóspede</Label>
                   <Input
                     id="guest-name-out"
-                    placeholder="Enter guest name"
+                    placeholder="Digite o nome do hóspede"
                     required
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="room-number">Room Number</Label>
+                  <Label htmlFor="room-number">Número do Quarto</Label>
                   <Input
                     id="room-number"
-                    placeholder="Enter room number"
+                    placeholder="Digite o número do quarto"
                     required
                   />
                 </div>
-                <Button type="submit">Process Check-out</Button>
+                <Button type="submit">Buscar Check-out</Button>
               </form>
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Guest Name</TableHead>
-                    <TableHead>Accommodation</TableHead>
-                    <TableHead>Room</TableHead>
+                    <TableHead>Nome do Hóspede</TableHead>
+                    <TableHead>Acomodação</TableHead>
+                    <TableHead>Quarto</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>

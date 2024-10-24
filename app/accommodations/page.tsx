@@ -86,22 +86,22 @@ export default function AccommodationsPage() {
 
   return (
     <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <h1 className="text-3xl font-bold mb-8">Available Accommodations</h1>
+      <h1 className="text-3xl font-bold mb-8">Acomodações Disponíveis</h1>
 
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
         <div className="lg:col-span-1">
           <Card>
             <CardHeader>
-              <CardTitle>Filters</CardTitle>
+              <CardTitle>Filtros</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="location">Location</Label>
+                <Label htmlFor="location">Localização</Label>
                 <div className="relative">
                   <MapPinIcon className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
                   <Input
                     id="location"
-                    placeholder="Enter location"
+                    placeholder="Digite a localização"
                     className="pl-10"
                   />
                 </div>
@@ -121,7 +121,7 @@ export default function AccommodationsPage() {
                       {checkIn ? (
                         format(checkIn, "PPP")
                       ) : (
-                        <span>Pick a date</span>
+                        <span>Escolha uma data</span>
                       )}
                     </Button>
                   </PopoverTrigger>
@@ -145,12 +145,12 @@ export default function AccommodationsPage() {
                         "w-full justify-start text-left font-normal bg-transparent",
                         !checkOut && "text-muted-foreground"
                       )}
-                     >
+                    >
                       <CalendarIcon className="mr-2 h-4 w-4" />
                       {checkOut ? (
                         format(checkOut, "PPP")
                       ) : (
-                        <span>Pick a date</span>
+                        <span>Escolha uma data</span>
                       )}
                     </Button>
                   </PopoverTrigger>
@@ -165,7 +165,7 @@ export default function AccommodationsPage() {
                 </Popover>
               </div>
               <div className="space-y-2">
-                <Label htmlFor="guests">Guests</Label>
+                <Label htmlFor="guests">Hóspedes</Label>
                 <div className="relative">
                   <UsersIcon className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
                   <Select
@@ -182,19 +182,19 @@ export default function AccommodationsPage() {
                         ),
                       })}
                     >
-                      <SelectValue placeholder="Select" />
+                      <SelectValue placeholder="Selecione" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="1">1 Guest</SelectItem>
-                      <SelectItem value="2">2 Guests</SelectItem>
-                      <SelectItem value="3">3 Guests</SelectItem>
-                      <SelectItem value="4">4+ Guests</SelectItem>
+                      <SelectItem value="1">1 Hóspede</SelectItem>
+                      <SelectItem value="2">2 Hóspedes</SelectItem>
+                      <SelectItem value="3">3 Hóspedes</SelectItem>
+                      <SelectItem value="4">4+ Hóspedes</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
               </div>
               <div className="space-y-2">
-                <Label>Price Range</Label>
+                <Label>Faixa de Preço</Label>
                 <Slider
                   min={0}
                   max={500}
@@ -203,11 +203,11 @@ export default function AccommodationsPage() {
                   onValueChange={setPriceRange}
                 />
                 <div className="flex justify-between text-sm text-gray-500">
-                  <span>${priceRange[0]}</span>
-                  <span>${priceRange[1]}</span>
+                  <span>R${priceRange[0]}</span>
+                  <span>R${priceRange[1]}</span>
                 </div>
               </div>
-              <Button className="w-full">Apply Filters</Button>
+              <Button className="w-full">Aplicar Filtros</Button>
             </CardContent>
           </Card>
         </div>
@@ -229,8 +229,8 @@ export default function AccommodationsPage() {
                 </CardHeader>
                 <CardContent>
                   <p className="text-2xl font-bold mb-2">
-                    ${accommodation.price}{" "}
-                    <span className="text-sm font-normal">per night</span>
+                    R${accommodation.price}{" "}
+                    <span className="text-sm font-normal">por noite</span>
                   </p>
                   <div className="flex items-center mb-2">
                     <span className="text-yellow-400 mr-1">★</span>
@@ -240,7 +240,7 @@ export default function AccommodationsPage() {
                     {accommodation.amenities.includes("WiFi") && (
                       <WifiIcon className="h-5 w-5 text-gray-500" />
                     )}
-                    {accommodation.amenities.includes("Coffee Maker") && (
+                    {accommodation.amenities.includes("Cafeteira") && (
                       <CoffeeIcon className="h-5 w-5 text-gray-500" />
                     )}
                     {accommodation.amenities.includes("TV") && (
@@ -249,7 +249,7 @@ export default function AccommodationsPage() {
                   </div>
                 </CardContent>
                 <CardFooter>
-                  <Button className="w-full">Book Now</Button>
+                  <Button className="w-full">Reservar Agora</Button>
                 </CardFooter>
               </Card>
             ))}

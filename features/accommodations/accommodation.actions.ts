@@ -25,6 +25,6 @@ export const createAccommodationAction = safeAction
       type: accommodation.type,
       capacity: accommodation.capacity,
       price: accommodation.price,
-      rating: accommodation.rating,
+      rating: 0.0,
     })
   })

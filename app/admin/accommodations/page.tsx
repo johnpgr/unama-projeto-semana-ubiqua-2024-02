@@ -17,36 +17,37 @@ import {
 import { NewAccommodationForm } from "./new-accommodation-form"
 import { createAccommodationAction } from "~/features/accommodations/accommodation.actions"
 import { db } from "~/database"
-
-// export const runtime = "edge"
+import { Accommodation } from "~/database/schema"
+import { desc } from "drizzle-orm"
 
 export default async function AccommodationsPage() {
   const accommodations = await db.query.Accommodation.findMany({
     with: { address: true },
+    orderBy: desc(Accommodation.createdAt)
   })
 
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-bold text-foreground">Accommodations</h1>
-        <NewAccommodationForm action={createAccommodationAction}/>
+        <h1 className="text-3xl font-bold text-foreground">Acomodações</h1>
+        <NewAccommodationForm action={createAccommodationAction} />
       </div>
       <Card>
         <CardHeader>
-          <CardTitle>All Accommodations</CardTitle>
+          <CardTitle>Todas as Acomodações</CardTitle>
           <CardDescription>
-            Manage your registered accommodations
+            Gerencie suas acomodações registradas
           </CardDescription>
         </CardHeader>
         <CardContent>
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Name</TableHead>
-                <TableHead>Type</TableHead>
-                <TableHead>Capacity</TableHead>
-                <TableHead>Location</TableHead>
-                <TableHead>Actions</TableHead>
+                <TableHead>Nome</TableHead>
+                <TableHead>Tipo</TableHead>
+                <TableHead>Capacidade</TableHead>
+                <TableHead>Localização</TableHead>
+                <TableHead>Ações</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -58,7 +59,7 @@ export default async function AccommodationsPage() {
                   <TableCell>{acc.address!.street}</TableCell>
                   <TableCell>
                     <Button variant="outline" size="sm">
-                      Edit
+                      Editar
                     </Button>
                   </TableCell>
                 </TableRow>
