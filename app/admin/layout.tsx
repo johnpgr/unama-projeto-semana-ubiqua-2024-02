@@ -17,12 +17,14 @@ import {
 } from "lucide-react"
 import Image from "next/image"
 import Placeholder from "~/assets/placeholder.svg"
-import { Nav, MobileNav } from "./Nav"
+import { Nav, MobileNav } from "./nav"
 import { auth } from "~/lib/auth"
 import { notFound } from "next/navigation"
 import { UserRole } from "~/database/schema"
 
 const navItemClasses = "h-5 w-5 mr-2"
+
+export const runtime = "edge"
 
 const navItems = [
   {

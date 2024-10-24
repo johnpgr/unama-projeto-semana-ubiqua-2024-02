@@ -19,6 +19,9 @@ import {
 } from "~/components/ui/table"
 import { MapPin } from "lucide-react"
 
+export const runtime = "edge"
+export const experimental_ppr = true
+
 export default function SupportPage() {
   const attractions = [
     { id: 1, name: "City Museum", distance: "0.5 km", rating: 4.5 },

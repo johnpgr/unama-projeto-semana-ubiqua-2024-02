@@ -20,6 +20,8 @@ import {
   TableRow,
 } from "~/components/ui/table"
 
+export const runtime = "edge"
+
 export default function ReservationsPage() {
   const [checkIns, setCheckIns] = useState([
     { id: 1, name: "John Doe", accommodation: "Grand Hotel", room: "101" },

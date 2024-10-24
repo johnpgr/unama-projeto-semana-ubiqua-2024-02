@@ -7,6 +7,7 @@ export const metadata: Metadata = {
   title: "EasyLodge",
   description: "UNAMA Projeto Hackaton Semana Ubiqua 2024_02",
 }
+export const experimental_ppr = true
 
 export default function Layout({
   children,

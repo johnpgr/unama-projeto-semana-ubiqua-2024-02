@@ -4,6 +4,9 @@ import { Button } from "~/components/ui/button"
 import { auth, signInGithubAction } from "~/lib/auth"
 import { redirect } from "next/navigation"
 
+export const runtime = "edge"
+export const experimental_ppr = true
+
 export default async function AuthPage() {
   const session = await auth()
   if(session?.user) redirect("/")
