@@ -5,6 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "~/com
 import { Button } from "~/components/ui/button"
 
 export const dynamic = "force-static"
+export const runtime = "edge"
 
 export default function HomePage() {
   return (

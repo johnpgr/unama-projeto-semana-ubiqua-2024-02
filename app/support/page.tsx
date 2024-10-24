@@ -20,6 +20,7 @@ import {
 import { MapPin } from "lucide-react"
 
 export const dynamic = "force-static"
+export const runtime = "edge"
 
 export default function SupportPage() {
   const attractions = [
