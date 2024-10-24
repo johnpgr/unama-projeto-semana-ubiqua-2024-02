@@ -48,8 +48,6 @@ const navItems = [
 ]
 export type NavItem = (typeof navItems)[number]
 
-export const runtime = "edge"
-
 export default async function AdminLayout({
   children,
 }: {
