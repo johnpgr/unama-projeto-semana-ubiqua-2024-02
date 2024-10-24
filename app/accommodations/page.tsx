@@ -52,7 +52,6 @@ const accommodations = [
 ]
 
 export const dynamic = "force-static"
-export const runtime = "edge"
 
 export default function AccommodationsPage() {
   return (
