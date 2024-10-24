@@ -129,10 +129,10 @@ export function Header() {
               <Link href="/accommodations">Encontre Acomodações</Link>
             </li>
             <li>
-              <Link href="/about">Sobre Nós</Link>
+              <Link href="#">Sobre Nós</Link>
             </li>
             <li>
-              <Link href="/contact">Contato</Link>
+              <Link href="#">Contato</Link>
             </li>
             <Suspense fallback={<div className="w-4"></div>}>
               <UserSection />
