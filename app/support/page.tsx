@@ -19,8 +19,7 @@ import {
 } from "~/components/ui/table"
 import { MapPin } from "lucide-react"
 
-export const runtime = "edge"
-export const experimental_ppr = true
+export const dynamic = "force-static"
 
 export default function SupportPage() {
   const attractions = [
