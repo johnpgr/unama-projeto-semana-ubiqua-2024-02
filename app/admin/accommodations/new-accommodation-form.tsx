@@ -1,26 +1,30 @@
 "use client"
 
-import { Building2, PlusCircle, School, Ship, Users } from "lucide-react"
+import {
+    Building,
+    Building2, Cuboid, PlusCircle, Ship,
+    Volleyball
+} from "lucide-react"
 import React from "react"
 import { Input } from "~/components/ui/input"
 import { Label } from "~/components/ui/label"
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
 } from "~/components/ui/select"
 import { useMediaQuery } from "~/hooks/use-media-query"
 import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
+    Drawer,
+    DrawerClose,
+    DrawerContent,
+    DrawerDescription,
+    DrawerFooter,
+    DrawerHeader,
+    DrawerTitle,
+    DrawerTrigger,
 } from "~/components/ui/drawer"
 import {
     Sheet,
@@ -33,21 +37,34 @@ import {
     SheetClose,
 } from "~/components/ui/sheet"
 import { Button } from "~/components/ui/button"
+import { AccommodationType } from "~/database/schema"
+import { createAccommodationAction } from "~/features/accommodations/accommodation.actions"
 
-export function NewAccommodationForm() {
+const iconClasses = "mr-2 h-4 w-4"
+const accommodationTypeIcons: Record<string, React.ReactNode> = {
+  [AccommodationType.Hotel]: <Building2 className={iconClasses} />,
+  [AccommodationType.Ship]: <Ship className={iconClasses} />,
+  [AccommodationType.Hostel]: <Building className={iconClasses} />,
+  [AccommodationType.Resort]: <Volleyball className={iconClasses} />,
+  [AccommodationType.Adapted]: <Cuboid className={iconClasses} />,
+}
+
+export function NewAccommodationForm(props: {action: typeof createAccommodationAction}) {
   const isMobile = useMediaQuery("(max-width: 640px)")
   const [formData, setFormData] = React.useState({
     name: "",
     type: "",
     capacity: "",
-    location: "",
+    street: "",
+    city: "",
+    postalCode: "",
   })
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault()
     // Add logic to handle form submission
     console.log("Form submitted:", formData)
     // Reset form after submission
-    setFormData({ name: "", type: "", capacity: "", location: "" })
+    setFormData({ name: "", type: "", capacity: "", street: "", city: "", postalCode: "" })
   }
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -78,30 +95,14 @@ export function NewAccommodationForm() {
             <SelectValue placeholder="Select accommodation type" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="hotel">
-              <span className="flex items-center">
-                <Building2 className="mr-2 h-4 w-4" />
-                Hotel
-              </span>
-            </SelectItem>
-            <SelectItem value="ship">
-              <span className="flex items-center">
-                <Ship className="mr-2 h-4 w-4" />
-                Ship
-              </span>
-            </SelectItem>
-            <SelectItem value="school">
-              <span className="flex items-center">
-                <School className="mr-2 h-4 w-4" />
-                School
-              </span>
-            </SelectItem>
-            <SelectItem value="community-center">
-              <span className="flex items-center">
-                <Users className="mr-2 h-4 w-4" />
-                Community Center
-              </span>
-            </SelectItem>
+            {Object.keys(accommodationTypeIcons).map((type) => (
+              <SelectItem key={type} value={type}>
+                <span className="flex items-center">
+                  {accommodationTypeIcons[type]}
+                  {type}
+                </span>
+              </SelectItem>
+            ))}
           </SelectContent>
         </Select>
       </div>
@@ -117,13 +118,33 @@ export function NewAccommodationForm() {
           required
         />
       </div>
+      <p className="font-bold pt-4">Address</p>
       <div className="space-y-2">
-        <Label htmlFor="location">Location</Label>
+        <Label htmlFor="street">Street</Label>
         <Input
-          id="location"
-          name="location"
-          placeholder="Enter location"
-          value={formData.location}
+          id="street"
+          placeholder="Enter street address"
+          value={formData.street}
+          onChange={handleInputChange}
+          required
+        />
+      </div>
+      <div className="space-y-2">
+        <Label htmlFor="city">City</Label>
+        <Input
+          id="city"
+          placeholder="Enter city"
+          value={formData.city}
+          onChange={handleInputChange}
+          required
+        />
+      </div>
+      <div className="space-y-2">
+        <Label htmlFor="postalCode">Postal Code</Label>
+        <Input
+          id="postalCode"
+          placeholder="Enter Postal Code"
+          value={formData.postalCode}
           onChange={handleInputChange}
           required
         />

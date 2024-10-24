@@ -1,15 +1,9 @@
-import { DataSource, DataSourceOptions } from "typeorm"
-import User from "../features/users/user.entity"
-import Accommodation from "../features/accommodations/accommodation.entity"
-import Reservation from "../features/reservations/reservation.entity"
-import Address from "../features/addresses/address.entity"
+import * as schema from "./schema"
+import { env } from "~/env.mjs"
+import { drizzle } from "drizzle-orm/libsql"
 
-export const options: DataSourceOptions = {
-  type: "better-sqlite3",
-  database: "./database/db.sqlite",
-  entities: [User, Accommodation, Reservation, Address],
-  synchronize: true,
-}
-
-export const appDataSource = new DataSource(options)
-export const queryBuilder = appDataSource.createQueryBuilder()
+export const db = drizzle({
+  connection: { url: env.DATABASE_URL, authToken: env.DATABASE_AUTH_TOKEN },
+  schema,
+  logger: true,
+})

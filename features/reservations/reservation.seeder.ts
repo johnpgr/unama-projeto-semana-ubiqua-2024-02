@@ -1,38 +1,37 @@
-import Accommodation from "../accommodations/accommodation.entity"
-import User from "../users/user.entity"
-import Reservation, { ReservationStatus } from "./reservation.entity"
-import { faker } from "@faker-js/faker"
 import { BaseSeeder } from "~/database/seed"
+import { Accommodation } from "../accommodations/accommodation.schema"
+import { db } from "~/database"
+import {
+  InsertReservation,
+  Reservation,
+  ReservationStatus,
+} from "./reservation.schema"
+import { User } from "../users/user.schema"
+import { faker } from "@faker-js/faker"
 
 export default class ReservationSeeder extends BaseSeeder {
   async run() {
-    const accommodations = await Accommodation.find()
-    const users = await User.find()
+    const accommodations = await db
+      .select({ id: Accommodation.id })
+      .from(Accommodation)
+    const users = await db.select({ id: User.id }).from(User)
+    const reservations = Array.from({ length: 30 }).map(() => {
+      const checkIn = faker.date.future()
+      const checkOut = new Date(checkIn)
+      checkOut.setDate(
+        checkOut.getDate() + faker.number.int({ min: 1, max: 14 })
+      )
 
-    await Promise.all(
-      Array.from({ length: 20 }, () => {
-        const accommodation = faker.helpers.arrayElement(accommodations)
-        const status = faker.helpers.objectValue(ReservationStatus)
-        const checkIn = faker.date.future()
-        const checkOut = faker.date.between({
-          from: checkIn,
-          to: new Date(checkIn.getTime() + 14 * 24 * 60 * 60 * 1000),
-        })
-        const user = faker.helpers.arrayElement(users)
-        const totalGuests = faker.number.int({
-          min: 1,
-          max: accommodation.capacity,
-        })
+      return {
+        checkIn: checkIn,
+        checkOut: checkOut,
+        totalGuests: faker.number.int({ min: 1, max: 6 }),
+        status: faker.helpers.arrayElement(Object.values(ReservationStatus)),
+        accommodationId: faker.helpers.arrayElement(accommodations).id,
+        userId: faker.helpers.arrayElement(users).id,
+      } satisfies InsertReservation
+    })
 
-        const reservation = new Reservation()
-        reservation.accommodation = accommodation
-        reservation.user = user
-        reservation.totalGuests = totalGuests
-        reservation.checkIn = checkIn
-        reservation.checkOut = checkOut
-        reservation.status = status
-        return reservation.save()
-      })
-    )
+    await db.insert(Reservation).values(reservations)
   }
 }

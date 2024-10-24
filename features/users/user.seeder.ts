@@ -1,16 +1,18 @@
 import { BaseSeeder } from "~/database/seed"
-import User from "./user.entity"
+import { InsertUser, User } from "./user.schema"
 import { faker } from "@faker-js/faker"
+import { db } from "~/database"
 
 export default class UserSeeder extends BaseSeeder {
   async run() {
-    await Promise.all(
-      Array.from({ length: 10 }).map((_, i) => {
-        const user = new User()
-        user.fullName = faker.person.fullName()
-        user.email = faker.internet.email()
-        return user.save()
-      })
+    await db.insert(User).values(
+      Array.from({ length: 10 }).map(
+        () =>
+          ({
+            name: faker.person.fullName(),
+            email: faker.internet.email(),
+          }) satisfies InsertUser
+      )
     )
   }
 }

@@ -1,18 +1,16 @@
-import Address from "./address.entity"
 import { faker } from "@faker-js/faker"
+import { db } from "~/database"
 import { BaseSeeder } from "~/database/seed"
+import { Address } from "./address.schema"
 
 export default class AddressSeeder extends BaseSeeder {
   async run() {
-    await Promise.all(
-      Array.from({ length: 50 }).map(() => {
-        const address = new Address()
-        address.city = faker.location.city()
-        address.street = faker.location.street()
-        address.postalCode = faker.location.zipCode()
-
-        return address.save()
-      })
+    await db.insert(Address).values(
+      Array.from({ length: 20 }).map(() => ({
+        street: faker.location.streetAddress(),
+        city: faker.location.city(),
+        postalCode: faker.location.zipCode(),
+      }))
     )
   }
 }
