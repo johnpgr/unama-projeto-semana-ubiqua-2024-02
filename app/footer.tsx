@@ -96,7 +96,7 @@ export function Footer() {
         </div>
         <div className="mt-8 border-t border-foreground pt-8 text-center">
           <p className="text-sm text-foreground/70">
-            &copy; 2024 LodgeEase, Inc. Todos os direitos reservados.
+            &copy; 2024 EasyLodge, Inc. Todos os direitos reservados.
           </p>
         </div>
       </div>
