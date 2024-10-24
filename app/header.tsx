@@ -134,7 +134,7 @@ export function Header() {
             <li>
               <Link href="/contact">Contato</Link>
             </li>
-            <Suspense fallback={}>
+            <Suspense fallback={<div className="w-4"></div>}>
               <UserSection />
             </Suspense>
           </ul>
