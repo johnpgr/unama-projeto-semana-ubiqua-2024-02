@@ -4,7 +4,7 @@ import { SearchForm } from "./search"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "~/components/ui/card"
 import { Button } from "~/components/ui/button"
 
-export const experimental_ppr = true
+export const dynamic = "force-static"
 
 export default function HomePage() {
   return (

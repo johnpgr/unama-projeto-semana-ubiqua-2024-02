@@ -1,6 +1,6 @@
 import Image from "next/image"
 import Placeholder from "~/assets/placeholder.svg"
-import { Filters } from "./filters" // Adjust the import path as necessary
+import { Filters } from "./filters"
 import {
   Card,
   CardContent,
@@ -51,8 +51,7 @@ const accommodations = [
   },
 ]
 
-export const runtime = "edge"
-export const experimental_ppr = true
+export const dynamic = "force-static"
 
 export default function AccommodationsPage() {
   return (

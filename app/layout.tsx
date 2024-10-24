@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   description: "UNAMA Projeto Hackaton Semana Ubiqua 2024_02",
 }
 export const experimental_ppr = true
+export const runtime = "edge"
 
 export default function Layout({
   children,
