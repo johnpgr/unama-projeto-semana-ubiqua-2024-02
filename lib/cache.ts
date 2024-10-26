@@ -8,7 +8,7 @@ interface CachedFunction<Inputs extends unknown[], Output> {
 
 export const cache = <Inputs extends unknown[], Output>(
   callback: (...args: Inputs) => Promise<Output>,
-  options: { tags: string[]; revalidate: number },
+  options: { tags: string[]; revalidate?: number | false },
 ) => {
   const fn = react_cache(
     unstable_cache(callback, options.tags, options),

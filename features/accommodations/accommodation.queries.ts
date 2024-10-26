@@ -9,5 +9,5 @@ export const listAccommodations = cache(
       with: { address: true },
       orderBy: desc(Accommodation.createdAt),
     }),
-  { tags: ["listAccommodations"], revalidate: 60 * 60 * 2 },
+  { tags: ["listAccommodations"] },
 )
