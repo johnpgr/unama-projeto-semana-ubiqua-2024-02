@@ -1,32 +1,19 @@
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu"
 import Link from "next/link"
-import { LogOut, Menu, Settings, Shield } from "lucide-react"
+import { Menu, Settings, Shield } from "lucide-react"
 import { Button } from "~/components/ui/button"
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar"
 import { UserRole } from "~/database/schema"
 import { getSession } from "~/features/auth/auth"
 import { Suspense } from "react"
-import { signOutAction } from "~/features/auth/auth.actions"
-
-export function SignoutButton() {
-  return (
-    <form action={signOutAction}>
-      <DropdownMenuItem asChild>
-        <button type="submit" className="w-full cursor-pointer">
-          <LogOut className="mr-2 h-4 w-4" />
-          <span>Sair</span>
-        </button>
-      </DropdownMenuItem>
-    </form>
-  )
-}
+import { SignoutButton } from "./signout-button"
 
 async function UserSection() {
   const session = await getSession()
@@ -76,7 +63,9 @@ async function UserSection() {
                     <Link href="/admin">Painel de Administração</Link>
                   </DropdownMenuItem>
                 ) : null}
-                <SignoutButton />
+                <DropdownMenuItem asChild>
+                  <SignoutButton />
+                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </div>

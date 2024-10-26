@@ -1,6 +1,6 @@
 import Image from "next/image"
 import Placeholder from "~/assets/placeholder.svg"
-import { SearchForm } from "./search"
+import { SearchForm } from "./_components/search"
 import {
   Card,
   CardContent,
