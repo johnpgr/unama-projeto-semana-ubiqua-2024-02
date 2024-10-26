@@ -1,19 +1,19 @@
 import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu"
 import Link from "next/link"
-import { Menu, Settings, Shield } from "lucide-react"
+import { LogOut, Menu, Settings, Shield } from "lucide-react"
 import { Button } from "~/components/ui/button"
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar"
 import { UserRole } from "~/database/schema"
 import { getSession } from "~/features/auth/auth"
 import { Suspense } from "react"
-import { SignoutButton } from "./signout-button"
+import { SignoutButton } from "./signout"
 
 async function UserSection() {
   const session = await getSession()
@@ -53,19 +53,19 @@ async function UserSection() {
                   </div>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>
+                <DropdownMenuItem className="cursor-pointer">
                   <Settings className="mr-2 h-4 w-4" />
                   <span>Configurações</span>
                 </DropdownMenuItem>
                 {user.role === UserRole.Admin ? (
-                  <DropdownMenuItem>
-                    <Shield className="mr-2 h-4 w-4" />
-                    <Link href="/admin">Painel de Administração</Link>
+                  <DropdownMenuItem asChild>
+                    <Link href="/admin" className="cursor-pointer">
+                      <Shield className="mr-2 h-4 w-4" />
+                      Painel de Administração
+                    </Link>
                   </DropdownMenuItem>
                 ) : null}
-                <DropdownMenuItem asChild>
-                  <SignoutButton />
-                </DropdownMenuItem>
+                <SignoutButton />
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
@@ -88,7 +88,7 @@ async function UserSection() {
                     </p>
                   </div>
                 </DropdownMenuLabel>
-                <DropdownMenuItem>
+                <DropdownMenuItem className="cursor-default">
                   <Settings className="mr-2 h-4 w-4" />
                   <span>Configurações</span>
                 </DropdownMenuItem>

@@ -2,7 +2,7 @@
 
 import { LoginSchema, RegisterSchema } from "./auth.validation"
 import { getUserByEmail, getUserByName } from "../users/user.queries"
-import { signIn, signOut } from "./auth"
+import { signIn } from "./auth"
 import { DEFAULT_LOGIN_REDIRECT } from "./auth.config"
 import { AuthError } from "next-auth"
 import { User } from "../users/user.schema"
@@ -85,8 +85,4 @@ export const registerAction = createServerAction()
 
 export async function loginGithubAction() {
   await signIn("github")
-}
-
-export async function signOutAction() {
-  await signOut()
 }
