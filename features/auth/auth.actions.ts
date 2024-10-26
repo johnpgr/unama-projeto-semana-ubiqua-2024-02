@@ -6,10 +6,10 @@ import { signIn, signOut } from "./auth"
 import { DEFAULT_LOGIN_REDIRECT } from "./auth.config"
 import { AuthError } from "next-auth"
 import { User } from "../users/user.schema"
-import bcrypt from "bcryptjs"
 import { db } from "~/database"
 import { createServerAction, ZSAError } from "zsa"
 import { redirect } from "next/navigation"
+import { hashPassword } from "~/lib/password"
 
 export const loginAction = createServerAction()
   .input(LoginSchema)
@@ -25,6 +25,7 @@ export const loginAction = createServerAction()
       await signIn("credentials", {
         email,
         password,
+        redirect: false,
       })
     } catch (e) {
       if (e instanceof AuthError) {
@@ -47,7 +48,7 @@ export const registerAction = createServerAction()
   .handler(async ({ input }) => {
     const { name, email, password, callbackUrl } = input
 
-    const existingUser = await getUserByName(email)
+    const existingUser = await getUserByName(name)
     if (existingUser) {
       throw new ZSAError("CONFLICT", "Nome de usuário já cadastrado")
     }
@@ -57,8 +58,10 @@ export const registerAction = createServerAction()
       throw new ZSAError("CONFLICT", "Email já cadastrado")
     }
 
-    const hashedPassword = await bcrypt.hash(password, 12)
+    const hashedPassword = await hashPassword(password)
+    console.log({ email, name, hashedPassword })
     try {
+      console.log("Creating user")
       await db.insert(User).values({
         email,
         name,
@@ -67,6 +70,7 @@ export const registerAction = createServerAction()
       await signIn("credentials", {
         email,
         password,
+        redirect: false,
       })
     } catch (e) {
       console.error(e)

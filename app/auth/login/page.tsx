@@ -13,6 +13,8 @@ import { GithubLogin } from "./github-login-btn"
 import { redirect } from "next/navigation"
 import { getSession } from "~/features/auth/auth"
 
+export const runtime = "edge"
+
 export default async function AuthPage() {
   const session = await getSession()
   if (session?.user) {

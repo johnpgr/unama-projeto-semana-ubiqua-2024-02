@@ -2,7 +2,7 @@ import { relations, sql } from "drizzle-orm"
 import { sqliteTable, text, integer, real } from "drizzle-orm/sqlite-core"
 import { Address } from "../addresses/address.schema"
 import { Reservation } from "../reservations/reservation.schema"
-import { ulid } from "ulid"
+import { ulid } from "~/lib/ulid"
 
 export const AccommodationType = {
   Hotel: "Hotel",

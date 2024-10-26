@@ -1,7 +1,7 @@
 import { relations, sql } from "drizzle-orm"
 import { sqliteTable, text, integer } from "drizzle-orm/sqlite-core"
 import { Accommodation } from "../accommodations/accommodation.schema"
-import { ulid } from "ulid"
+import { ulid } from "~/lib/ulid"
 
 export type InsertAddress = typeof Address.$inferInsert
 export type Address = typeof Address.$inferSelect

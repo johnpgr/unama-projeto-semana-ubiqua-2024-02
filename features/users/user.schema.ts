@@ -2,7 +2,7 @@ import { relations, sql } from "drizzle-orm"
 import { primaryKey, sqliteTable, text, integer } from "drizzle-orm/sqlite-core"
 import { Reservation } from "../reservations/reservation.schema"
 import { AdapterAccountType } from "next-auth/adapters"
-import { ulid } from "ulid"
+import { ulid } from "~/lib/ulid"
 
 export type UserRole = (typeof UserRole)[keyof typeof UserRole]
 export const UserRole = {
@@ -15,7 +15,7 @@ export const User = sqliteTable("users", {
   id: text("id")
     .primaryKey()
     .$defaultFn(() => ulid()),
-  name: text("name").notNull(),
+  name: text("name").unique().notNull(),
   email: text("email").unique().notNull(),
   hashedPassword: text("hashedPassword"),
   emailVerified: integer("email_verified", { mode: "timestamp_ms" }),

@@ -2,7 +2,7 @@ import { relations, sql } from "drizzle-orm"
 import { sqliteTable, text, integer } from "drizzle-orm/sqlite-core"
 import { User } from "../users/user.schema"
 import { Accommodation } from "../accommodations/accommodation.schema"
-import { ulid } from "ulid"
+import { ulid } from "~/lib/ulid"
 
 export type ReservationStatus =
   (typeof ReservationStatus)[keyof typeof ReservationStatus]
