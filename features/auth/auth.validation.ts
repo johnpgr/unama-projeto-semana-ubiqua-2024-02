@@ -1,5 +1,6 @@
 import { z } from "zod"
 
+export type LoginSchema = z.infer<typeof LoginSchema>
 export const LoginSchema = z.object({
   email: z.string().email({
     message: "Email invalido.",
@@ -9,6 +10,7 @@ export const LoginSchema = z.object({
   }),
   callbackUrl: z.string().optional(),
 })
+export type RegisterSchema = z.infer<typeof RegisterSchema>
 export const RegisterSchema = z.object({
   email: z.string().email({
     message: "Email invalido.",

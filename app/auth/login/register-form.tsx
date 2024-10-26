@@ -1,10 +1,9 @@
 "use client"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Mail, EyeOff, Eye, Link, Lock } from "lucide-react"
+import { Mail, EyeOff, Eye, Lock } from "lucide-react"
 import { useSearchParams } from "next/navigation"
 import React, { useState } from "react"
 import { useForm } from "react-hook-form"
-import { z } from "zod"
 import {
   Form,
   FormField,
@@ -19,22 +18,22 @@ import { registerAction } from "~/features/auth/auth.actions"
 import { RegisterSchema } from "~/features/auth/auth.validation"
 import { PendingButton } from "~/components/pending-btn"
 import { Checkbox } from "~/components/ui/checkbox"
+import { toast } from "sonner"
+import Link from "next/link"
+import { useServerAction } from "zsa-react"
 
 export function RegisterForm() {
   const searchParams = useSearchParams()
   const callbackUrl = searchParams.get("callbackUrl")
-
   const [showPassword, setShowPassword] = useState(false)
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword)
   }
-
-  const [result, setResult] = React.useState({
-    message: "",
-    success: false,
+  const {execute, isPending} = useServerAction(registerAction, {
+    onError: ({err}) => toast.error("Erro ao registrar", {description: err.message}),
   })
-  const [isPending, startTransition] = React.useTransition()
-  const form = useForm<z.infer<typeof RegisterSchema>>({
+
+  const form = useForm<RegisterSchema>({
     resolver: zodResolver(RegisterSchema),
     defaultValues: {
       name: "",
@@ -45,21 +44,8 @@ export function RegisterForm() {
     mode: "onChange",
   })
 
-  const onSubmit = async (data: z.infer<typeof RegisterSchema>) => {
-    startTransition(() => {
-      registerAction(data).then((res) => {
-        if (res?.data) {
-          setResult(res.data)
-        } else {
-          setResult({
-            success: false,
-            message:
-              "Ocorreu um erro inesperado ao registrar. Tente novamente mais tarde",
-          })
-        }
-        form.reset()
-      })
-    })
+  const onSubmit = async (data: RegisterSchema) => {
+    await execute(data)
   }
 
   return (
@@ -143,19 +129,16 @@ export function RegisterForm() {
           <Checkbox />
           <span>
             Eu concordo com os{" "}
-            <Link href="#" className="text-primary">
+            <Link href="#" className="text-primary font-medium">
               termos e condições
             </Link>
           </span>
         </div>
-        <PendingButton isPending={isPending} text="Registrar" className="w-full"/>
-        <div>
-          {result.success ? (
-            <div className="text-green-500">{result.message}</div>
-          ) : (
-            <div className="text-red-500">{result.message}</div>
-          )}
-        </div>
+        <PendingButton
+          isPending={isPending}
+          text="Registrar"
+          className="w-full"
+        />
       </form>
     </Form>
   )

@@ -44,7 +44,7 @@ export default async function AuthPage() {
             </TabsContent>
           </Tabs>
         </CardContent>
-        <CardFooter className="flex flex-col gap-2 -mt-8">
+        <CardFooter className="flex flex-col gap-2 -mt-4">
           <p>ou</p>
           <GithubLogin />
         </CardFooter>

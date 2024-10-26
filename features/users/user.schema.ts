@@ -1,8 +1,8 @@
 import { relations, sql } from "drizzle-orm"
 import { primaryKey, sqliteTable, text, integer } from "drizzle-orm/sqlite-core"
 import { Reservation } from "../reservations/reservation.schema"
-import { ulid } from "~/lib/ulid"
 import { AdapterAccountType } from "next-auth/adapters"
+import { ulid } from "ulid"
 
 export type UserRole = (typeof UserRole)[keyof typeof UserRole]
 export const UserRole = {

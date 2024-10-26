@@ -5,7 +5,7 @@ const config = {
   semi: false,
   printWidth: 80,
   tabWidth: 2,
-  trailingComma: "es5",
+  trailingComma: "all",
 }
 
 export default config

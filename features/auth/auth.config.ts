@@ -4,7 +4,7 @@ import Google from "next-auth/providers/google"
 import Github from "next-auth/providers/github"
 import { LoginSchema } from "./auth.validation"
 import { getUserByEmail } from "../users/user.queries"
-import { verifyPassword } from "~/lib/passwords"
+import bcrypt from "bcryptjs"
 
 export const AuthConfig: NextAuthConfig = {
   providers: [
@@ -30,9 +30,9 @@ export const AuthConfig: NextAuthConfig = {
           return null
         }
 
-        const passwordMatch = await verifyPassword(
+        const passwordMatch = await bcrypt.compare(
+          password,
           user.hashedPassword,
-          password
         )
         if (!passwordMatch) return null
 

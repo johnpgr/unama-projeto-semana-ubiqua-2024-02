@@ -1,6 +1,7 @@
 "use client"
 
-import React, { useState } from "react"
+import React from "react"
+import { useServerAction } from "zsa-react"
 import { Button } from "~/components/ui/button"
 import { Input } from "~/components/ui/input"
 import { Label } from "~/components/ui/label"
@@ -9,7 +10,6 @@ import Link from "next/link"
 import { Eye, EyeOff, Lock, Mail } from "lucide-react"
 import { useForm } from "react-hook-form"
 import { useSearchParams } from "next/navigation"
-import { z } from "zod"
 import { LoginSchema } from "~/features/auth/auth.validation"
 import { loginAction } from "~/features/auth/auth.actions"
 import {
@@ -22,26 +22,20 @@ import {
 } from "~/components/ui/form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { PendingButton } from "~/components/pending-btn"
+import { toast } from "sonner"
 
 export function LoginForm() {
   const searchParams = useSearchParams()
   const callbackUrl = searchParams.get("callbackUrl")
-  const urlError =
-    searchParams.get("error") === "OAuthAccontNotLinked"
-      ? "Seu email já esta em uso em outra conta!"
-      : ""
-
-  const [showPassword, setShowPassword] = useState(false)
+  const [showPassword, setShowPassword] = React.useState(false)
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword)
   }
-
-  const [result, setResult] = React.useState({
-    message: "",
-    success: false,
+  const { execute, isPending } = useServerAction(loginAction, {
+    onError: ({ err }) =>
+      toast.error("Erro ao logar", { description: err.message }),
   })
-  const [isPending, startTransition] = React.useTransition()
-  const form = useForm<z.infer<typeof LoginSchema>>({
+  const form = useForm<LoginSchema>({
     resolver: zodResolver(LoginSchema),
     defaultValues: {
       email: "",
@@ -50,22 +44,14 @@ export function LoginForm() {
     },
   })
 
-  const onSubmit = async (data: z.infer<typeof LoginSchema>) => {
-    startTransition(() => {
-      loginAction(data).then((res) => {
-        if (res?.data) {
-          setResult(res.data)
-        } else {
-          setResult({
-            success: false,
-            message:
-              "Ocorreu um erro inesperado ao fazer login. Tente novamente mais tarde",
-          })
-        }
-        form.reset()
-      })
-    })
+  const onSubmit = async (data: LoginSchema) => {
+    await execute(data)
   }
+
+  if (searchParams.get("error") === "OAuthAccontNotLinked")
+    toast.error("Erro ao logar", {
+      description: "Seu email já esta em uso em outra conta!",
+    })
 
   return (
     <Form {...form}>
@@ -143,14 +129,6 @@ export function LoginForm() {
           </div>
         </div>
         <PendingButton text="Entrar" isPending={isPending} className="w-full" />
-        <div className="text-center text-red-500">{urlError}</div>
-        <div>
-          {result.success ? (
-            <div className="text-green-500">{result.message}</div>
-          ) : (
-            <div className="text-red-500">{result.message}</div>
-          )}
-        </div>
       </form>
     </Form>
   )

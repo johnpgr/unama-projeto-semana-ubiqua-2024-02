@@ -2,6 +2,7 @@ import "./globals.css"
 import type { Metadata } from "next"
 import { Header } from "./header"
 import { Footer } from "./footer"
+import { Toaster } from "~/components/ui/sonner"
 
 export const metadata: Metadata = {
   title: "EasyLodge",
@@ -10,11 +11,12 @@ export const metadata: Metadata = {
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" className="dark">
       <body>
         <Header />
         {children}
         <Footer />
+        <Toaster />
       </body>
     </html>
   )

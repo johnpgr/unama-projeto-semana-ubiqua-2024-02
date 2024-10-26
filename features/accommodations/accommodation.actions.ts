@@ -3,13 +3,11 @@ import { Accommodation } from "./accommodation.schema"
 import { Address } from "../addresses/address.schema"
 import { db } from "~/database"
 import { CreateAccommodationSchema } from "./accommodation.validation"
-import { action } from "~/lib/actions"
+import { createServerAction, ZSAError } from "zsa"
 
-export const createAccommodationAction = action
-  .schema(CreateAccommodationSchema)
-  .action(async ({ parsedInput }) => {
-    const accommodation = parsedInput
-
+export const createAccommodationAction = createServerAction()
+  .input(CreateAccommodationSchema)
+  .handler(async ({ input: accommodation }) => {
     const [newAddress] = await db
       .insert(Address)
       .values({
@@ -19,7 +17,9 @@ export const createAccommodationAction = action
       })
       .returning()
 
-    if (!newAddress) throw new Error("Falha ao criar endereço")
+    if (!newAddress) {
+      throw new ZSAError("INTERNAL_SERVER_ERROR", "Falha ao criar endereço")
+    }
 
     await db.insert(Accommodation).values({
       addressId: newAddress.id,

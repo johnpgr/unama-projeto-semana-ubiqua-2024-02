@@ -2,19 +2,17 @@ import { relations, sql } from "drizzle-orm"
 import { sqliteTable, text, integer } from "drizzle-orm/sqlite-core"
 import { User } from "../users/user.schema"
 import { Accommodation } from "../accommodations/accommodation.schema"
-import { ulid } from "~/lib/ulid"
+import { ulid } from "ulid"
 
+export type ReservationStatus =
+  (typeof ReservationStatus)[keyof typeof ReservationStatus]
 export const ReservationStatus = {
   Pending: "Pending",
   Approved: "Approved",
   Rejected: "Rejected",
 } as const
-export type ReservationStatus =
-  (typeof ReservationStatus)[keyof typeof ReservationStatus]
 
-export type InsertReservation = typeof Reservation.$inferInsert
 export type Reservation = typeof Reservation.$inferSelect
-
 export const Reservation = sqliteTable("reservations", {
   id: text("id")
     .primaryKey()
@@ -24,10 +22,10 @@ export const Reservation = sqliteTable("reservations", {
   totalGuests: integer("total_guests").notNull(),
   status: text("status").$type<ReservationStatus>().notNull(),
   createdAt: integer("created_at", { mode: "timestamp" }).default(
-    sql`CURRENT_TIMESTAMP`
+    sql`CURRENT_TIMESTAMP`,
   ),
   updatedAt: integer("updated_at", { mode: "timestamp" }).default(
-    sql`CURRENT_TIMESTAMP`
+    sql`CURRENT_TIMESTAMP`,
   ),
   accommodationId: text("accommodation_id").references(() => Accommodation.id),
   userId: text("user_id").references(() => User.id),

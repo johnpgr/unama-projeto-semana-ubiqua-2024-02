@@ -54,6 +54,10 @@ import {
   FormMessage,
 } from "~/components/ui/form"
 import { useRouter } from "next/navigation"
+import { toast } from "sonner"
+import { useServerAction } from "zsa-react"
+import { ZSAError } from "zsa"
+import { PendingButton } from "~/components/pending-btn"
 
 const iconClasses = "mr-2 h-4 w-4"
 const accommodationTypeIcons: Record<string, React.ReactNode> = {
@@ -74,6 +78,7 @@ const accommodationTypesPTBR: Record<string, string> = {
 
 const FormContent = (props: {
   toggleOpen: () => void
+  execute: (data: CreateAccommodationSchema) => Promise<unknown>
   children: React.ReactNode
 }) => {
   const router = useRouter()
@@ -83,13 +88,10 @@ const FormContent = (props: {
   })
 
   async function onSubmit(data: z.infer<typeof CreateAccommodationSchema>) {
-    try {
-      await createAccommodationAction(data)
-      router.refresh()
-      props.toggleOpen()
-    } catch (error) {
-      console.error(error)
-    }
+    await props.execute(data)
+
+    router.refresh()
+    props.toggleOpen()
   }
 
   return (
@@ -235,6 +237,11 @@ export function NewAccommodationForm() {
     setIsOpen((prev) => !prev)
   }
 
+  const { execute, isPending } = useServerAction(createAccommodationAction, {
+    onError: ({ err }) =>
+      toast.error("Erro ao criar acomodação", { description: err.message }),
+  })
+
   return (
     <>
       {isMobile ? (
@@ -252,14 +259,18 @@ export function NewAccommodationForm() {
                 Insira os detalhes da nova acomodação
               </DrawerDescription>
             </DrawerHeader>
-            <FormContent toggleOpen={toggleOpen}>
+            <FormContent execute={execute} toggleOpen={toggleOpen}>
               <DrawerFooter className="px-0">
                 <DrawerClose asChild>
                   <Button type="button" variant="outline">
                     Cancelar
                   </Button>
                 </DrawerClose>
-                <Button type="submit">Criar Acomodação</Button>
+                <PendingButton
+                  isPending={isPending}
+                  type="submit"
+                  text="Criar Acomodação"
+                />
               </DrawerFooter>
             </FormContent>
           </DrawerContent>
@@ -279,14 +290,18 @@ export function NewAccommodationForm() {
                 Insira os detalhes da nova acomodação
               </SheetDescription>
             </SheetHeader>
-            <FormContent toggleOpen={toggleOpen}>
+            <FormContent execute={execute} toggleOpen={toggleOpen}>
               <SheetFooter>
                 <SheetClose asChild>
                   <Button type="button" variant="outline">
                     Cancelar
                   </Button>
                 </SheetClose>
-                <Button type="submit">Criar Acomodação</Button>
+                <PendingButton
+                  isPending={isPending}
+                  type="submit"
+                  text="Criar Acomodação"
+                />
               </SheetFooter>
             </FormContent>
           </SheetContent>
