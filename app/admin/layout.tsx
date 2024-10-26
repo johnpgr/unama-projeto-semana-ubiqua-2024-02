@@ -1,26 +1,27 @@
 import { Button } from "~/components/ui/button"
 import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu"
 import {
-    BedDouble,
-    CalendarDays,
-    CreditCard, LayoutDashboard,
-    LogOut,
-    Menu,
-    Settings
+  BedDouble,
+  CalendarDays,
+  CreditCard,
+  LayoutDashboard,
+  LogOut,
+  Menu,
+  Settings,
 } from "lucide-react"
 import Image from "next/image"
 import Placeholder from "~/assets/placeholder.svg"
 import { Nav, MobileNav } from "./nav"
-import { auth } from "~/lib/auth"
 import { notFound } from "next/navigation"
 import { UserRole } from "~/database/schema"
+import { getSession } from "~/features/auth/auth"
 
 const navItemClasses = "h-5 w-5 mr-2"
 
@@ -55,7 +56,7 @@ export default async function AdminLayout({
 }: {
   children: React.ReactNode
 }) {
-  const session = await auth()
+  const session = await getSession()
   if (session?.user?.role !== UserRole.Admin) return notFound()
 
   return (

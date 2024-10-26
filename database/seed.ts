@@ -1,5 +1,5 @@
 export class BaseSeeder {
-  async run(): Promise<void> { }
+  async run(): Promise<void> {}
 }
 
 export class DatabaseSeeder extends BaseSeeder {
@@ -10,7 +10,11 @@ export class DatabaseSeeder extends BaseSeeder {
   public async run() {
     await this.runSeeder(await import("../features/users/user.seeder"))
     await this.runSeeder(await import("../features/addresses/address.seeder"))
-    await this.runSeeder(await import("../features/accommodations/accommodation.seeder"))
-    await this.runSeeder(await import("../features/reservations/reservation.seeder"))
+    await this.runSeeder(
+      await import("../features/accommodations/accommodation.seeder")
+    )
+    await this.runSeeder(
+      await import("../features/reservations/reservation.seeder")
+    )
   }
 }

@@ -1,10 +1,14 @@
 import Image from "next/image"
 import Placeholder from "~/assets/placeholder.svg"
 import { SearchForm } from "./search"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "~/components/ui/card"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "~/components/ui/card"
 import { Button } from "~/components/ui/button"
-
-export const dynamic = "force-static"
 
 export default function HomePage() {
   return (

@@ -1,33 +1,95 @@
-'use client'
+"use client"
 
-import { useState } from 'react'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "~/components/ui/card"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "~/components/ui/table"
+import { useState } from "react"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "~/components/ui/card"
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "~/components/ui/table"
 import { Badge } from "~/components/ui/badge"
 import { Button } from "~/components/ui/button"
 import { Calendar } from "~/components/ui/calendar"
-import { Popover, PopoverContent, PopoverTrigger } from "~/components/ui/popover"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "~/components/ui/select"
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "~/components/ui/popover"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "~/components/ui/select"
 import { ChevronDown, CalendarIcon } from "lucide-react"
 import { format } from "date-fns"
 import { cn } from "~/lib/utils"
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from "recharts"
 
 const paymentsData = [
-  { id: 1, date: "2024-03-01", amount: 150.00, method: "Cartão de Crédito", status: "Concluído" },
-  { id: 2, date: "2024-03-02", amount: 200.50, method: "PayPal", status: "Concluído" },
-  { id: 3, date: "2024-03-03", amount: 175.25, method: "Transferência Bancária", status: "Pendente" },
-  { id: 4, date: "2024-03-04", amount: 300.00, method: "Cartão de Crédito", status: "Concluído" },
-  { id: 5, date: "2024-03-05", amount: 125.75, method: "PayPal", status: "Falhou" },
+  {
+    id: 1,
+    date: "2024-03-01",
+    amount: 150.0,
+    method: "Cartão de Crédito",
+    status: "Concluído",
+  },
+  {
+    id: 2,
+    date: "2024-03-02",
+    amount: 200.5,
+    method: "PayPal",
+    status: "Concluído",
+  },
+  {
+    id: 3,
+    date: "2024-03-03",
+    amount: 175.25,
+    method: "Transferência Bancária",
+    status: "Pendente",
+  },
+  {
+    id: 4,
+    date: "2024-03-04",
+    amount: 300.0,
+    method: "Cartão de Crédito",
+    status: "Concluído",
+  },
+  {
+    id: 5,
+    date: "2024-03-05",
+    amount: 125.75,
+    method: "PayPal",
+    status: "Falhou",
+  },
 ]
 
 const chartData = [
-  { name: 'Janeiro', total: 1200 },
-  { name: 'Fevereiro', total: 1900 },
-  { name: 'Março', total: 2400 },
-  { name: 'Abril', total: 1800 },
-  { name: 'Maio', total: 2800 },
-  { name: 'Junho', total: 3200 },
+  { name: "Janeiro", total: 1200 },
+  { name: "Fevereiro", total: 1900 },
+  { name: "Março", total: 2400 },
+  { name: "Abril", total: 1800 },
+  { name: "Maio", total: 2800 },
+  { name: "Junho", total: 3200 },
 ]
 
 export const runtime = "edge"
@@ -70,7 +132,9 @@ export default function PaymentsDashboard() {
               <SelectItem value="all">Todos os Métodos</SelectItem>
               <SelectItem value="credit-card">Cartão de Crédito</SelectItem>
               <SelectItem value="paypal">PayPal</SelectItem>
-              <SelectItem value="bank-transfer">Transferência Bancária</SelectItem>
+              <SelectItem value="bank-transfer">
+                Transferência Bancária
+              </SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -83,25 +147,35 @@ export default function PaymentsDashboard() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">R$12.345,67</div>
-            <p className="text-xs text-muted-foreground">+20,1% desde o mês passado</p>
+            <p className="text-xs text-muted-foreground">
+              +20,1% desde o mês passado
+            </p>
           </CardContent>
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Transações Bem-Sucedidas</CardTitle>
+            <CardTitle className="text-sm font-medium">
+              Transações Bem-Sucedidas
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">1.234</div>
-            <p className="text-xs text-muted-foreground">+15% desde o mês passado</p>
+            <p className="text-xs text-muted-foreground">
+              +15% desde o mês passado
+            </p>
           </CardContent>
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Valor Médio da Transação</CardTitle>
+            <CardTitle className="text-sm font-medium">
+              Valor Médio da Transação
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">R$123,45</div>
-            <p className="text-xs text-muted-foreground">+5% desde o mês passado</p>
+            <p className="text-xs text-muted-foreground">
+              +5% desde o mês passado
+            </p>
           </CardContent>
         </Card>
       </div>
@@ -128,7 +202,9 @@ export default function PaymentsDashboard() {
       <Card>
         <CardHeader>
           <CardTitle>Pagamentos Recentes</CardTitle>
-          <CardDescription>Uma lista dos pagamentos mais recentes</CardDescription>
+          <CardDescription>
+            Uma lista dos pagamentos mais recentes
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <Table>
@@ -147,11 +223,13 @@ export default function PaymentsDashboard() {
                   <TableCell>R${payment.amount.toFixed(2)}</TableCell>
                   <TableCell>{payment.method}</TableCell>
                   <TableCell>
-                    <Badge 
+                    <Badge
                       variant={
-                        payment.status === 'Concluído' ? 'default' :
-                        payment.status === 'Pendente' ? 'secondary' :
-                        'destructive'
+                        payment.status === "Concluído"
+                          ? "default"
+                          : payment.status === "Pendente"
+                            ? "secondary"
+                            : "destructive"
                       }
                     >
                       {payment.status}

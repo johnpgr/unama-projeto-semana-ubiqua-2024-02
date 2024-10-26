@@ -25,14 +25,14 @@ export const runtime = "edge"
 export default async function AccommodationsPage() {
   const accommodations = await db.query.Accommodation.findMany({
     with: { address: true },
-    orderBy: desc(Accommodation.createdAt)
+    orderBy: desc(Accommodation.createdAt),
   })
 
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <h1 className="text-3xl font-bold text-foreground">Acomodações</h1>
-        <NewAccommodationForm action={createAccommodationAction} />
+        <NewAccommodationForm />
       </div>
       <Card>
         <CardHeader>

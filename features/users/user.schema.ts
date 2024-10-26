@@ -2,24 +2,23 @@ import { relations, sql } from "drizzle-orm"
 import { primaryKey, sqliteTable, text, integer } from "drizzle-orm/sqlite-core"
 import { Reservation } from "../reservations/reservation.schema"
 import { ulid } from "~/lib/ulid"
-import {AdapterAccountType} from "next-auth/adapters"
+import { AdapterAccountType } from "next-auth/adapters"
 
+export type UserRole = (typeof UserRole)[keyof typeof UserRole]
 export const UserRole = {
   Admin: "Admin",
   User: "User",
 } as const
-export type UserRole = (typeof UserRole)[keyof typeof UserRole]
 
-export type InsertUser = typeof User.$inferInsert
 export type User = typeof User.$inferSelect
-
 export const User = sqliteTable("users", {
   id: text("id")
     .primaryKey()
     .$defaultFn(() => ulid()),
   name: text("name").notNull(),
   email: text("email").unique().notNull(),
-  emailVerified: integer("emailVerified", { mode: "timestamp_ms" }),
+  hashedPassword: text("hashedPassword"),
+  emailVerified: integer("email_verified", { mode: "timestamp_ms" }),
   image: text("image"),
   role: text("role").notNull().default(UserRole.Admin),
   createdAt: integer("created_at", { mode: "timestamp_ms" }).default(
@@ -36,6 +35,7 @@ export const UsersRelations = relations(User, ({ many }) => ({
   accounts: many(Account),
 }))
 
+export type Account = typeof Account.$inferSelect
 export const Account = sqliteTable(
   "accounts",
   {
@@ -67,6 +67,7 @@ export const AccountRelations = relations(Account, ({ one }) => ({
   }),
 }))
 
+export type Session = typeof Session.$inferSelect
 export const Session = sqliteTable("sessions", {
   sessionToken: text("session_token").primaryKey(),
   userId: text("user_id")
@@ -82,10 +83,13 @@ export const SessionRelations = relations(Session, ({ one }) => ({
   }),
 }))
 
+export type VerificationToken = typeof VerificationToken.$inferSelect
 export const VerificationToken = sqliteTable(
   "verification_tokens",
   {
-    identifier: text("identifier").notNull(),
+    identifier: text("identifier")
+      .notNull()
+      .$defaultFn(() => ulid()),
     token: text("token").notNull(),
     expires: integer("expires", { mode: "timestamp_ms" }).notNull(),
   },

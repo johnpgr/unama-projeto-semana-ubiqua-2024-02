@@ -1,5 +1,4 @@
 import { DatabaseSeeder } from "../database/seed"
-
 ;(async () => {
   await new DatabaseSeeder()
     .run()

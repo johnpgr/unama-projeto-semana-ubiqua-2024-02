@@ -19,8 +19,6 @@ import {
 } from "~/components/ui/table"
 import { MapPin } from "lucide-react"
 
-export const dynamic = "force-static"
-
 export default function SupportPage() {
   const attractions = [
     { id: 1, name: "City Museum", distance: "0.5 km", rating: 4.5 },

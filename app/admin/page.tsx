@@ -1,28 +1,22 @@
 import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardHeader,
-    CardTitle,
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
 } from "~/components/ui/card"
-import {
-    BedDouble,
-    CalendarDays,
-    CreditCard, Users
-} from "lucide-react"
+import { BedDouble, CalendarDays, CreditCard, Users } from "lucide-react"
 import { OccupancyCharts } from "./charts"
 import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
 } from "~/components/ui/table"
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar"
 import { Badge } from "~/components/ui/badge"
-
-export const runtime = "edge"
 
 const chartData = [
   { name: "Hotel", total: 80 },
@@ -88,7 +82,9 @@ export default function AdminDashboard() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">254</div>
-            <p className="text-xs text-muted-foreground">+12 desde o mês passado</p>
+            <p className="text-xs text-muted-foreground">
+              +12 desde o mês passado
+            </p>
           </CardContent>
         </Card>
         <Card>
@@ -100,7 +96,9 @@ export default function AdminDashboard() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">145</div>
-            <p className="text-xs text-muted-foreground">+22% desde a semana passada</p>
+            <p className="text-xs text-muted-foreground">
+              +22% desde a semana passada
+            </p>
           </CardContent>
         </Card>
         <Card>
@@ -192,7 +190,9 @@ export default function AdminDashboard() {
         <Card>
           <CardHeader>
             <CardTitle>Tendência de Ocupação</CardTitle>
-            <CardDescription>Tendência da taxa de ocupação de 7 dias</CardDescription>
+            <CardDescription>
+              Tendência da taxa de ocupação de 7 dias
+            </CardDescription>
           </CardHeader>
           <CardContent>
             <OccupancyCharts data={chartData} />

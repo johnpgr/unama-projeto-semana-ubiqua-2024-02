@@ -20,8 +20,6 @@ import {
   TableRow,
 } from "~/components/ui/table"
 
-export const runtime = "edge"
-
 export default function ReservationsPage() {
   const [checkIns, setCheckIns] = useState([
     { id: 1, name: "John Doe", accommodation: "Grand Hotel", room: "101" },
@@ -60,9 +58,7 @@ export default function ReservationsPage() {
           <Card>
             <CardHeader>
               <CardTitle>Check-in</CardTitle>
-              <CardDescription>
-                Buscar check-ins de hóspedes
-              </CardDescription>
+              <CardDescription>Buscar check-ins de hóspedes</CardDescription>
             </CardHeader>
             <CardContent>
               <form onSubmit={handleCheckIn} className="space-y-4 mb-6">
@@ -109,9 +105,7 @@ export default function ReservationsPage() {
           <Card>
             <CardHeader>
               <CardTitle>Check-out</CardTitle>
-              <CardDescription>
-                Buscar check-outs de hóspedes
-              </CardDescription>
+              <CardDescription>Buscar check-outs de hóspedes</CardDescription>
             </CardHeader>
             <CardContent>
               <form onSubmit={handleCheckOut} className="space-y-4 mb-6">

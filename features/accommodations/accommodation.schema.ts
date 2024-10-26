@@ -14,7 +14,6 @@ export const AccommodationType = {
 export type AccommodationType =
   (typeof AccommodationType)[keyof typeof AccommodationType]
 
-
 export type InsertAccommodation = typeof Accommodation.$inferInsert
 export type Accommodation = typeof Accommodation.$inferSelect
 

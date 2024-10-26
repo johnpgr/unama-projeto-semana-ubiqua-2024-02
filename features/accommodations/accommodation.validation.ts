@@ -1,17 +1,15 @@
-import { createInsertSchema, createSelectSchema } from "drizzle-zod"
+import { createInsertSchema } from "drizzle-zod"
 import { Accommodation, AccommodationType } from "./accommodation.schema"
 import { z } from "zod"
-import { addressInsertSchema } from "../addresses/address.validation"
+import { AddressInsertSchema } from "../addresses/address.validation"
 
-export const accommodationInsertSchema = createInsertSchema(Accommodation, {
-  type: z.nativeEnum(AccommodationType),
-}).omit({ rating: true })
-
-export const accommodationSelectSchema = createSelectSchema(Accommodation, {
+export type CreateAccommodationSchema = z.infer<
+  typeof CreateAccommodationSchema
+>
+export const CreateAccommodationSchema = createInsertSchema(Accommodation, {
   type: z.nativeEnum(AccommodationType),
 })
-
-export const createAccommodationActionSchema = z.object({
-  accommodation: accommodationInsertSchema,
-  address: addressInsertSchema,
-})
+  .omit({ addressId: true })
+  .extend({
+    address: AddressInsertSchema,
+  })

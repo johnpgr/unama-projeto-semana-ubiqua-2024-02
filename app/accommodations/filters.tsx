@@ -1,42 +1,33 @@
-"use client";
+"use client"
 
-import { useState } from "react";
-import { Button, buttonVariants } from "~/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "~/components/ui/card";
-import { Input } from "~/components/ui/input";
-import { Label } from "~/components/ui/label";
+import { useState } from "react"
+import { Button, buttonVariants } from "~/components/ui/button"
+import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card"
+import { Input } from "~/components/ui/input"
+import { Label } from "~/components/ui/label"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "~/components/ui/select";
-import { Slider } from "~/components/ui/slider";
-import {
-  CalendarIcon,
-  MapPinIcon,
-  UsersIcon,
-} from "lucide-react";
-import { format } from "date-fns";
-import { cn } from "~/lib/utils";
-import { Calendar } from "~/components/ui/calendar";
+} from "~/components/ui/select"
+import { Slider } from "~/components/ui/slider"
+import { CalendarIcon, MapPinIcon, UsersIcon } from "lucide-react"
+import { format } from "date-fns"
+import { cn } from "~/lib/utils"
+import { Calendar } from "~/components/ui/calendar"
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "~/components/ui/popover";
+} from "~/components/ui/popover"
 
 export function Filters() {
-  const [priceRange, setPriceRange] = useState([0, 500]);
-  const [checkIn, setCheckIn] = useState<Date>();
-  const [checkOut, setCheckOut] = useState<Date>();
-  const [guestCount, setGuestCount] = useState<number>();
+  const [priceRange, setPriceRange] = useState([0, 500])
+  const [checkIn, setCheckIn] = useState<Date>()
+  const [checkOut, setCheckOut] = useState<Date>()
+  const [guestCount, setGuestCount] = useState<number>()
 
   return (
     <Card>
@@ -159,5 +150,5 @@ export function Filters() {
         <Button className="w-full">Aplicar Filtros</Button>
       </CardContent>
     </Card>
-  );
+  )
 }

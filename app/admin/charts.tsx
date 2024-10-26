@@ -1,6 +1,6 @@
 "use client"
 import { Bar, BarChart, XAxis, YAxis } from "recharts"
-import { ChartContainer } from "~/components/ui/chart";
+import { ChartContainer } from "~/components/ui/chart"
 
 const chartConfig = {}
 

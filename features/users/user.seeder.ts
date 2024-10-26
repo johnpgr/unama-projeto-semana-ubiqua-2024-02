@@ -1,5 +1,5 @@
 import { BaseSeeder } from "~/database/seed"
-import { InsertUser, User } from "./user.schema"
+import { User } from "./user.schema"
 import { faker } from "@faker-js/faker"
 import { db } from "~/database"
 
@@ -11,7 +11,7 @@ export default class UserSeeder extends BaseSeeder {
           ({
             name: faker.person.fullName(),
             email: faker.internet.email(),
-          }) satisfies InsertUser
+          })
       )
     )
   }

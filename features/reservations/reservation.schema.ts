@@ -16,7 +16,9 @@ export type InsertReservation = typeof Reservation.$inferInsert
 export type Reservation = typeof Reservation.$inferSelect
 
 export const Reservation = sqliteTable("reservations", {
-  id: text("id").primaryKey().$defaultFn(() => ulid()),
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => ulid()),
   checkIn: integer("check_in", { mode: "timestamp" }).notNull(),
   checkOut: integer("check_out", { mode: "timestamp" }).notNull(),
   totalGuests: integer("total_guests").notNull(),

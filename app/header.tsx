@@ -11,8 +11,9 @@ import { LogOut, Menu, Settings, Shield } from "lucide-react"
 import { Button } from "~/components/ui/button"
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar"
 import { UserRole } from "~/database/schema"
-import { auth, signOutAction } from "~/lib/auth"
+import { getSession } from "~/features/auth/auth"
 import { Suspense } from "react"
+import { signOutAction } from "~/features/auth/auth.actions"
 
 export function SignoutButton() {
   return (
@@ -28,7 +29,7 @@ export function SignoutButton() {
 }
 
 async function UserSection() {
-  const session = await auth()
+  const session = await getSession()
   const user = session?.user
 
   return (
@@ -109,7 +110,7 @@ async function UserSection() {
         </>
       ) : (
         <li>
-          <Link href="/login">Entrar</Link>
+          <Link href="/auth/login">Entrar</Link>
         </li>
       )}
     </>

@@ -1,13 +1,15 @@
 import { relations, sql } from "drizzle-orm"
 import { sqliteTable, text, integer } from "drizzle-orm/sqlite-core"
-import { Accommodation } from "../accommodations/accommodation.schema";
-import { ulid } from "~/lib/ulid";
+import { Accommodation } from "../accommodations/accommodation.schema"
+import { ulid } from "~/lib/ulid"
 
 export type InsertAddress = typeof Address.$inferInsert
 export type Address = typeof Address.$inferSelect
 
 export const Address = sqliteTable("addresses", {
-  id: text("id").primaryKey().$defaultFn(() => ulid()),
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => ulid()),
   street: text("street").notNull(),
   city: text("city").notNull(),
   postalCode: text("postal_code").notNull(),
@@ -24,4 +26,4 @@ export const AddressesRelations = relations(Address, ({ one }) => ({
     fields: [Address.id],
     references: [Accommodation.addressId],
   }),
-}));
+}))

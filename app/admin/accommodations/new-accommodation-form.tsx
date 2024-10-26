@@ -44,7 +44,7 @@ import { AccommodationType } from "~/database/schema"
 import { createAccommodationAction } from "~/features/accommodations/accommodation.actions"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
-import { createAccommodationActionSchema } from "~/features/accommodations/accommodation.validation"
+import { CreateAccommodationSchema } from "~/features/accommodations/accommodation.validation"
 import {
   Form,
   FormControl,
@@ -73,28 +73,23 @@ const accommodationTypesPTBR: Record<string, string> = {
 }
 
 const FormContent = (props: {
-  action: typeof createAccommodationAction
   toggleOpen: () => void
   children: React.ReactNode
 }) => {
   const router = useRouter()
-  const form = useForm<z.infer<typeof createAccommodationActionSchema>>({
-    resolver: zodResolver(createAccommodationActionSchema),
+  const form = useForm<z.infer<typeof CreateAccommodationSchema>>({
+    resolver: zodResolver(CreateAccommodationSchema),
     criteriaMode: "all",
   })
 
-  async function onSubmit(
-    data: z.infer<typeof createAccommodationActionSchema>
-  ) {
-    await props
-      .action(data)
-      .then(() => {
-        router.refresh()
-        props.toggleOpen()
-      })
-      .catch((e) => {
-        console.error(e)
-      })
+  async function onSubmit(data: z.infer<typeof CreateAccommodationSchema>) {
+    try {
+      await createAccommodationAction(data)
+      router.refresh()
+      props.toggleOpen()
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   return (
@@ -102,7 +97,7 @@ const FormContent = (props: {
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
         <FormField
           control={form.control}
-          name="accommodation.name"
+          name="name"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Nome da Acomodação</FormLabel>
@@ -115,7 +110,7 @@ const FormContent = (props: {
         />
         <FormField
           control={form.control}
-          name="accommodation.type"
+          name="type"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Tipo de acomodação</FormLabel>
@@ -149,7 +144,7 @@ const FormContent = (props: {
         />
         <FormField
           control={form.control}
-          name="accommodation.capacity"
+          name="capacity"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Capacidade</FormLabel>
@@ -169,7 +164,7 @@ const FormContent = (props: {
         {/* Price of the accommodation */}
         <FormField
           control={form.control}
-          name="accommodation.price"
+          name="price"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Preço</FormLabel>
@@ -232,9 +227,7 @@ const FormContent = (props: {
   )
 }
 
-export function NewAccommodationForm(props: {
-  action: typeof createAccommodationAction
-}) {
+export function NewAccommodationForm() {
   const isMobile = useMediaQuery("(max-width: 640px)")
   const [isOpen, setIsOpen] = React.useState(false)
 
@@ -259,7 +252,7 @@ export function NewAccommodationForm(props: {
                 Insira os detalhes da nova acomodação
               </DrawerDescription>
             </DrawerHeader>
-            <FormContent action={props.action} toggleOpen={toggleOpen}>
+            <FormContent toggleOpen={toggleOpen}>
               <DrawerFooter className="px-0">
                 <DrawerClose asChild>
                   <Button type="button" variant="outline">
@@ -286,7 +279,7 @@ export function NewAccommodationForm(props: {
                 Insira os detalhes da nova acomodação
               </SheetDescription>
             </SheetHeader>
-            <FormContent action={props.action} toggleOpen={toggleOpen} >
+            <FormContent toggleOpen={toggleOpen}>
               <SheetFooter>
                 <SheetClose asChild>
                   <Button type="button" variant="outline">
