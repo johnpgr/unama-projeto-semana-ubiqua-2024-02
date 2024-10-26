@@ -43,7 +43,6 @@ import { Button } from "~/components/ui/button"
 import { AccommodationType } from "~/database/schema"
 import { createAccommodationAction } from "~/features/accommodations/accommodation.actions"
 import { useForm } from "react-hook-form"
-import { z } from "zod"
 import { CreateAccommodationSchema } from "~/features/accommodations/accommodation.validation"
 import {
   Form,
@@ -56,7 +55,6 @@ import {
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 import { useServerAction } from "zsa-react"
-import { ZSAError } from "zsa"
 import { PendingButton } from "~/components/pending-btn"
 
 const iconClasses = "mr-2 h-4 w-4"
@@ -74,159 +72,6 @@ const accommodationTypesPTBR: Record<string, string> = {
   [AccommodationType.Hostel]: "Hostel",
   [AccommodationType.Resort]: "Resort",
   [AccommodationType.Adapted]: "Adaptado",
-}
-
-const FormContent = (props: {
-  toggleOpen: () => void
-  execute: (data: CreateAccommodationSchema) => Promise<unknown>
-  children: React.ReactNode
-}) => {
-  const router = useRouter()
-  const form = useForm<z.infer<typeof CreateAccommodationSchema>>({
-    resolver: zodResolver(CreateAccommodationSchema),
-    criteriaMode: "all",
-  })
-
-  async function onSubmit(data: z.infer<typeof CreateAccommodationSchema>) {
-    await props.execute(data)
-
-    router.refresh()
-    props.toggleOpen()
-  }
-
-  return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-        <FormField
-          control={form.control}
-          name="name"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Nome da Acomodação</FormLabel>
-              <FormControl>
-                <Input placeholder="Digite o nome da acomodação" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="type"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Tipo de acomodação</FormLabel>
-              <FormControl>
-                <Select
-                  required
-                  value={field.value}
-                  name={field.name}
-                  onValueChange={(v) => {
-                    field.onChange(v)
-                  }}
-                >
-                  <SelectTrigger id={field.name}>
-                    <SelectValue placeholder="Selecione o tipo de acomodação" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {Object.keys(accommodationTypeIcons).map((type) => (
-                      <SelectItem key={type} value={type}>
-                        <span className="flex items-center">
-                          {accommodationTypeIcons[type]}
-                          {accommodationTypesPTBR[type]}
-                        </span>
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="capacity"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Capacidade</FormLabel>
-              <FormControl>
-                <Input
-                  type="number"
-                  required
-                  placeholder="Digite a capacidade total"
-                  {...field}
-                  onChange={(e) => field.onChange(+e.target.value)}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        {/* Price of the accommodation */}
-        <FormField
-          control={form.control}
-          name="price"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Preço</FormLabel>
-              <FormControl>
-                <Input
-                  type="number"
-                  required
-                  placeholder="Digite o preço da acomodação"
-                  {...field}
-                  onChange={(e) => field.onChange(+e.target.value)}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <p className="font-bold pt-4">Endereço</p>
-        <FormField
-          control={form.control}
-          name="address.street"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Rua</FormLabel>
-              <FormControl>
-                <Input placeholder="Digite o endereço da rua" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="address.city"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Cidade</FormLabel>
-              <FormControl>
-                <Input placeholder="Digite a cidade" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="address.postalCode"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>CEP</FormLabel>
-              <FormControl>
-                <Input placeholder="Digite o CEP" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        {props.children}
-      </form>
-    </Form>
-  )
 }
 
 export function NewAccommodationForm() {
@@ -308,5 +153,178 @@ export function NewAccommodationForm() {
         </Sheet>
       )}
     </>
+  )
+}
+
+function FormContent(props: {
+  toggleOpen: () => void
+  execute: (data: CreateAccommodationSchema) => Promise<unknown>
+  children: React.ReactNode
+}) {
+  const { children, execute, toggleOpen } = props
+  const router = useRouter()
+  const form = useForm<CreateAccommodationSchema>({
+    resolver: zodResolver(CreateAccommodationSchema),
+    criteriaMode: "all",
+  })
+
+  async function onSubmit(data: CreateAccommodationSchema) {
+    await execute(data)
+
+    router.refresh()
+    toggleOpen()
+  }
+
+  return (
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+        <FormField
+          control={form.control}
+          name="name"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Nome da Acomodação</FormLabel>
+              <FormControl>
+                <Input placeholder="Digite o nome da acomodação" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="type"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Tipo de acomodação</FormLabel>
+              <FormControl>
+                <Select
+                  required
+                  value={field.value}
+                  name={field.name}
+                  onValueChange={(v) => {
+                    field.onChange(v)
+                  }}
+                >
+                  <SelectTrigger id={field.name}>
+                    <SelectValue placeholder="Selecione o tipo de acomodação" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {Object.keys(accommodationTypeIcons).map((type) => (
+                      <SelectItem key={type} value={type}>
+                        <span className="flex items-center">
+                          {accommodationTypeIcons[type]}
+                          {accommodationTypesPTBR[type]}
+                        </span>
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="capacity"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Capacidade</FormLabel>
+              <FormControl>
+                <Input
+                  type="number"
+                  required
+                  placeholder="Digite a capacidade total"
+                  {...field}
+                  onChange={(e) => field.onChange(+e.target.value)}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="price"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Preço</FormLabel>
+              <FormControl>
+                <Input
+                  type="number"
+                  required
+                  placeholder="Digite o preço da acomodação"
+                  {...field}
+                  onChange={(e) => field.onChange(+e.target.value)}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        {/* Rating */}
+        <FormField
+          control={form.control}
+          name="rating"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Avaliação</FormLabel>
+              <FormControl>
+                <Input
+                  type="number"
+                  required
+                  placeholder="Digite a avaliação da acomodação"
+                  {...field}
+                  onChange={(e) => field.onChange(+e.target.value)}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <p className="font-bold pt-4">Endereço</p>
+        <FormField
+          control={form.control}
+          name="address.street"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Rua</FormLabel>
+              <FormControl>
+                <Input placeholder="Digite o endereço da rua" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="address.city"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Cidade</FormLabel>
+              <FormControl>
+                <Input placeholder="Digite a cidade" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="address.postalCode"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>CEP</FormLabel>
+              <FormControl>
+                <Input placeholder="Digite o CEP" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        {children}
+      </form>
+    </Form>
   )
 }

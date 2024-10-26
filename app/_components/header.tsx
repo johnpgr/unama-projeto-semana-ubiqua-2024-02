@@ -7,13 +7,41 @@ import {
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu"
 import Link from "next/link"
-import { LogOut, Menu, Settings, Shield } from "lucide-react"
+import { Menu, Settings, Shield } from "lucide-react"
 import { Button } from "~/components/ui/button"
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar"
 import { UserRole } from "~/database/schema"
 import { getSession } from "~/features/auth/auth"
 import { Suspense } from "react"
 import { SignoutButton } from "./signout"
+
+export function Header() {
+  return (
+    <header className="bg-accent shadow-sm">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+        <Link href="/">
+          <h1 className="text-2xl font-bold">EasyLodge</h1>
+        </Link>
+        <nav>
+          <ul className="flex space-x-4 items-center">
+            <li>
+              <Link href="/accommodations">Encontre Acomodações</Link>
+            </li>
+            <li>
+              <Link href="#">Sobre Nós</Link>
+            </li>
+            <li>
+              <Link href="#">Contato</Link>
+            </li>
+            <Suspense fallback={<div className="w-4"></div>}>
+              <UserSection />
+            </Suspense>
+          </ul>
+        </nav>
+      </div>
+    </header>
+  )
+}
 
 async function UserSection() {
   const session = await getSession()
@@ -103,33 +131,5 @@ async function UserSection() {
         </li>
       )}
     </>
-  )
-}
-
-export function Header() {
-  return (
-    <header className="bg-accent shadow-sm">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-        <Link href="/">
-          <h1 className="text-2xl font-bold">EasyLodge</h1>
-        </Link>
-        <nav>
-          <ul className="flex space-x-4 items-center">
-            <li>
-              <Link href="/accommodations">Encontre Acomodações</Link>
-            </li>
-            <li>
-              <Link href="#">Sobre Nós</Link>
-            </li>
-            <li>
-              <Link href="#">Contato</Link>
-            </li>
-            <Suspense fallback={<div className="w-4"></div>}>
-              <UserSection />
-            </Suspense>
-          </ul>
-        </nav>
-      </div>
-    </header>
   )
 }

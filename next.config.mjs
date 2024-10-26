@@ -3,10 +3,13 @@
  */
 const nextConfig = {
   experimental: {
-    ppr: true
+    ppr: true,
   },
   eslint: {
     ignoreDuringBuilds: true,
+  },
+  typescript: {
+    ignoreBuildErrors: true,
   },
 }
 

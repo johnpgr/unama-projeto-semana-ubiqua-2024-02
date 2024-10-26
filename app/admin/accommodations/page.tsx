@@ -15,15 +15,10 @@ import {
   TableRow,
 } from "~/components/ui/table"
 import { NewAccommodationForm } from "./new-accommodation-form"
-import { db } from "~/database"
-import { Accommodation } from "~/database/schema"
-import { desc } from "drizzle-orm"
+import { listAccommodations } from "~/features/accommodations/accommodation.queries"
 
 export default async function AccommodationsPage() {
-  const accommodations = await db.query.Accommodation.findMany({
-    with: { address: true },
-    orderBy: desc(Accommodation.createdAt),
-  })
+  const accommodations = await listAccommodations()
 
   return (
     <div className="space-y-6">

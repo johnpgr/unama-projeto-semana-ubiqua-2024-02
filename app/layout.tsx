@@ -9,9 +9,11 @@ export const metadata: Metadata = {
   description: "UNAMA Projeto Hackaton Semana Ubiqua 2024_02",
 }
 
+export const revalidate = 86400
+
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en">
       <body>
         <Header />
         {children}
