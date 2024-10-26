@@ -13,8 +13,6 @@ import {
 } from "~/components/ui/card"
 import { AlertTriangle } from "lucide-react"
 
-export const runtime = "edge"
-
 export default function Error({
   error,
   reset,

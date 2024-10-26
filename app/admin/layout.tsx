@@ -25,8 +25,6 @@ import { getSession } from "~/features/auth/auth"
 
 const navItemClasses = "h-5 w-5 mr-2"
 
-export const runtime = "edge"
-
 const navItems = [
   {
     name: "Painel de Controle",

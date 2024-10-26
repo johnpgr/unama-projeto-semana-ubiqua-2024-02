@@ -10,8 +10,15 @@ import {
 import { LoginForm } from "./login-form"
 import { RegisterForm } from "./register-form"
 import { GithubLogin } from "./github-login-btn"
+import { redirect } from "next/navigation"
+import { getSession } from "~/features/auth/auth"
 
 export default async function AuthPage() {
+  const session = await getSession()
+  if (session?.user) {
+    redirect("/")
+  }
+
   return (
     <div className="w-full flex items-center justify-center min-h-screen px-4 py-12">
       <Card className="w-full max-w-md">

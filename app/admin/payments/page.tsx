@@ -92,8 +92,6 @@ const chartData = [
   { name: "Junho", total: 3200 },
 ]
 
-export const runtime = "edge"
-
 export default function PaymentsDashboard() {
   const [date, setDate] = useState<Date>()
 

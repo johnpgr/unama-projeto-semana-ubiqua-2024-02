@@ -15,12 +15,9 @@ import {
   TableRow,
 } from "~/components/ui/table"
 import { NewAccommodationForm } from "./new-accommodation-form"
-import { createAccommodationAction } from "~/features/accommodations/accommodation.actions"
 import { db } from "~/database"
 import { Accommodation } from "~/database/schema"
 import { desc } from "drizzle-orm"
-
-export const runtime = "edge"
 
 export default async function AccommodationsPage() {
   const accommodations = await db.query.Accommodation.findMany({

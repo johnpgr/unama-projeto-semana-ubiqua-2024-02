@@ -8,8 +8,6 @@ export const metadata: Metadata = {
   description: "UNAMA Projeto Hackaton Semana Ubiqua 2024_02",
 }
 
-export const runtime = "edge"
-
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
